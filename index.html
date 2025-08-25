@@ -20,12 +20,14 @@
 <body class="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-800">
   <!-- ===== CONFIG ===== -->
   <script>
-    // PDF katalog
+    // PDF katalog (letakkan file-nya di /downloads)
     const CATALOG_URL = "downloads/e catalog.pdf";
+
     // Google Form action (punya kamu)
     const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSekZCgIo6G84zigbytNiPlJCD2hHyFmHAdR7aQw8lxKKYfnfw/formResponse";
-    // YouTube: URL penuh ATAU ID (dua-duanya didukung)
-    const YOUTUBE_ID = "https://www.youtube.com/watch?v=Jg86i4Kg_QQ";
+
+    // YouTube: URL penuh ATAU ID, dua-duanya didukung
+    const YOUTUBE_INPUT = "https://www.youtube.com/watch?v=Jg86i4Kg_QQ";
 
     // === ENTRY ID dari pre-filled link (punya kamu) ===
     const FIELD_MAP = {
@@ -241,7 +243,7 @@
       </div>
     </div>
     <p class="text-sm text-slate-500 mt-2" data-i18n="video.note">
-      Upload file <code>videos/wingbend.mp4</code> atau set <code>YOUTUBE_ID</code> di bagian CONFIG.
+      Upload file <code>videos/wingbend.mp4</code> atau set <code>YOUTUBE</code> di bagian CONFIG.
     </p>
   </section>
 
@@ -310,6 +312,7 @@
       </div>
       <div class="text-slate-600 mb-4" data-i18n="form.subtitle">We’ll send you the latest catalog and product tips.</div>
 
+      <!-- optional iframe (hanya untuk debug=1) -->
       <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
       <form id="leadForm" class="grid grid-cols-1 md:grid-cols-2 gap-4" method="POST" target="hidden_iframe">
@@ -321,7 +324,8 @@
         <div><label class="text-sm" data-i18n="form.language">Preferred language</label>
           <!-- VALUE harus cocok dengan label opsi di Form -->
           <select class="w-full border rounded-xl px-3 py-2" id="f_language">
-            <option value="English">English</option><option value="日本語">日本語</option>
+            <option value="English">English</option>
+            <option value="日本語">日本語</option>
           </select>
         </div>
         <div class="md:col-span-2"><label class="text-sm" data-i18n="form.purpose">Project details or interest (optional)</label>
@@ -357,6 +361,9 @@
         <input type="hidden" id="f_page_url" />
         <input type="hidden" id="f_user_agent" />
 
+        <!-- penting untuk beberapa Form -->
+        <input type="hidden" name="submit" value="Submit" />
+
         <div class="md:col-span-2 flex justify-end gap-3 mt-2">
           <button type="button" class="px-4 py-2 rounded-xl border" data-close="1" data-i18n="form.cancel">Cancel</button>
           <button type="submit" class="px-4 py-2 rounded-xl bg-slate-900 text-white" id="submitBtn">
@@ -374,7 +381,7 @@
 
   <noscript><div class="max-w-6xl mx-auto p-4 text-red-600">This page requires JavaScript to submit the form and start the download.</div></noscript>
 
-  <!-- ===== JS (i18n + form + youtube) ===== -->
+  <!-- ===== JS (i18n + form + youtube + fetch submit) ===== -->
   <script>
     const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
     const translations = {
@@ -385,7 +392,7 @@
         about:{title:"What is WingBend?",copy:"WingBend and WingBend Plus are V-die systems that minimize surface marks while enabling short flanges, consistent angles, and excellent repeatability.",company:"Company",links:"Links",website:"Website",companyName:"Tokyo Seimitsu Hatsujo Co., Ltd.",location:"Yokohama, Japan"},
         features:{title:"Key Features",items:[{title:"Minimal marking",body:"Mark-free finish on visible surfaces — no rework."},{title:"Near-feature bending",body:"Bend close to holes and edges with stable flanges and exact angles."},{title:"Flexible applications",body:"Ideal for diagonal/tapered bends and chequer plates with consistent quality."}]},
         series:{title:"WB Series",labels:{standard:"STANDARD",heavy:"HEAVY",dieLength:"Die Length",materialThickness:"Material thickness"}},
-        video:{title:"WingBend Video / Simulation",note:"Upload videos/wingbend.mp4 or set YOUTUBE_ID above."},
+        video:{title:"WingBend Video / Simulation",note:"Upload videos/wingbend.mp4 or set YouTube above."},
         how:{title:"How to Order",steps:["Share sheet specs (material, thickness, width, batch rate).","We recommend the optimal WingBend model and slider.","Confirm quotation & delivery, then place PO."]},
         download:{title:"Download the WingBend Catalog",copy:"Fill in your details to receive the PDF instantly."},
         privacy:{note:"Your info is used to fulfill your request and relevant product updates. You can opt out anytime."},
@@ -398,7 +405,7 @@
         about:{title:"WingBendとは",copy:"WingBend／WingBend Plus は、短いフランジ・正確な角度・高い再現性を保ちながら、目視面のキズを抑えるVダイシステムです。",company:"会社情報",links:"リンク",website:"Webサイト",companyName:"東京精密発条株式会社",location:"日本・横浜"},
         features:{title:"主な特長",items:[{title:"目視面のキズを抑制",body:"外観部品でも後処理を最小化できます。"},{title:"穴・縁に近い曲げ",body:"穴や端部の近傍でも安定したフランジと角度を確保。"},{title:"幅広い適用",body:"斜め・テーパー・縞板など難素材でも均一な品質を実現。"}]},
         series:{title:"WBシリーズ",labels:{standard:"STANDARD",heavy:"HEAVY",dieLength:"ダイ長さ",materialThickness:"板厚"}},
-        video:{title:"WingBend 動画／シミュレーション",note:"videos/wingbend.mp4 を配置するか、上部の YOUTUBE_ID を設定してください。"},
+        video:{title:"WingBend 動画／シミュレーション",note:"videos/wingbend.mp4 を配置するか、上部の YouTube を設定してください。"},
         how:{title:"ご注文の流れ",steps:["材質・板厚・板幅・ロット等の仕様をご共有ください。","最適な WingBend 機種とスライダーをご提案します。","お見積り・納期確定後にご発注ください。"]},
         download:{title:"WingBend 総合カタログ",copy:"必要事項をご入力いただくと、PDF をすぐにダウンロードできます。"},
         privacy:{note:"ご提供いただいた情報は資料送付および関連製品のご案内にのみ利用します。配信停止はいつでも可能です。"},
@@ -444,7 +451,7 @@
       return input;
     }
     (function mountYouTube(){
-      const id = normalizeYouTubeId(YOUTUBE_ID);
+      const id = normalizeYouTubeId(YOUTUBE_INPUT);
       if(!id) return;
       const wrap=$("#ytWrap"), ifr=$("#ytIframe");
       ifr.src=`https://www.youtube.com/embed/${id}`;
@@ -482,7 +489,6 @@
 
       // consent
       $("#f_agree").setAttribute("name", FIELD_MAP.agree);
-      $("#f_agree").addEventListener("change",(e)=>{ e.target.value = e.target.checked ? CONSENT_VALUE : ""; });
 
       // hidden context (isi entry ID kalau pertanyaannya ada di Form)
       mapField($("#f_utm_source"),FIELD_MAP.utm_source);
@@ -500,14 +506,7 @@
     }
     mountForm();
 
-    // ===== Auto-download setelah submit =====
-    let iframeInitial=true, pending=true;
-    hiddenIframe.addEventListener("load",()=>{
-      if(iframeInitial){ iframeInitial=false; return; }
-      successNote.classList.remove("hidden");
-      startDownload();
-      pending=false;
-    });
+    // --- helper download ---
     function startDownload(){
       const a=document.createElement("a");
       a.href=encodeURI(CATALOG_URL);
@@ -516,15 +515,33 @@
       a.click();
       a.remove();
     }
-    leadForm.addEventListener("submit",()=>{
-      setTimeout(()=>{
-        if(pending){
-          successNote.classList.remove("hidden");
-          startDownload();
-          pending=false;
-        }
-      },2500);
-    });
+
+    // kirim via fetch no-cors agar stabil
+    async function sendToGoogleForm(){
+      // set nilai consent & language agar match label di Form
+      const agreeEl = $("#f_agree");
+      if (agreeEl && agreeEl.checked) agreeEl.value = CONSENT_VALUE;
+
+      const langEl = $("#f_language");
+      if (langEl) langEl.value = (langEl.value==='日本語' || langEl.value==='ja') ? '日本語' : 'English';
+
+      const fd = new FormData(leadForm);
+      try {
+        await fetch(GOOGLE_FORM_ACTION, { method:'POST', mode:'no-cors', body: fd });
+      } catch(e) { console.warn('Submit error (ignored due to no-cors):', e); }
+    }
+
+    // submit handler baru
+    (function attachSubmit(){
+      const debug = getParam('debug') === '1';
+      leadForm.addEventListener('submit', async (ev)=>{
+        if (debug) return; // biar lihat halaman "Thanks" Google
+        ev.preventDefault();
+        await sendToGoogleForm();
+        $("#successNote").classList.remove("hidden");
+        startDownload();
+      }, { passive:false });
+    })();
   </script>
 </body>
 </html>
