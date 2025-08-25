@@ -20,8 +20,11 @@
 <body class="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-800">
   <!-- ===== CONFIG (EDIT) ===== -->
   <script>
+    // PDF kamu (boleh nama file dengan spasi)
     const CATALOG_URL = "downloads/e catalog.pdf";
+    // Google Form action
     const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSekZCgIo6G84zigbytNiPlJCD2hHyFmHAdR7aQw8lxKKYfnfw/formResponse";
+    // YouTube: bisa URL penuh ATAU hanya ID
     const YOUTUBE_ID = "https://www.youtube.com/watch?v=Jg86i4Kg_QQ";
 
     // === ENTRY ID dari Google Form (hasil prefilled link kamu) ===
@@ -70,11 +73,7 @@
       <div class="flex items-center gap-2">
         <a href="https://wa.me/818021409299" target="_blank"
            class="rounded-2xl border px-3 py-2 text-sm inline-flex items-center gap-2">
-          <!-- WhatsApp icon (SVG) -->
-          <svg aria-hidden="true" viewBox="0 0 32 32" width="16" height="16">
-            <path d="M19.9 17.7c-.3-.1-1.8-.9-2.1-1s-.5-.1-.8.3-.9 1-1.1 1.2-.4.2-.7.1c-.3-.1-1.4-.5-2.7-1.7-1-1-1.7-2.2-1.9-2.5s0-.6.2-.7.3-.4.5-.6.2-.3.3-.5 0-.4 0-.6c0-.1-.8-2-1.1-2.8-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4s-1.1 1.1-1.1 2.6 1.1 3 1.3 3.2c.2.3 2.2 3.3 5.2 4.7 2.9 1.4 2.9.9 3.5.9.5 0 1.8-.7 2-1.3.2-.7.2-1.2.1-1.3 0-.1-.2-.1-.5-.2z" fill="#25D366"></path>
-            <path d="M27.2 4.8C24.5 2.1 21 0.7 17.2 0.7 9.6 0.7 3.4 6.8 3.4 14.4c0 2.3.6 4.6 1.8 6.6L3 31.3l10.6-2.8c1.9 1 4 1.6 6.1 1.6h0c7.6 0 13.8-6.1 13.8-13.7 0-3.7-1.4-7.2-4.1-9.9zM19.7 27.2h0c-1.9 0-3.7-.5-5.3-1.4l-.4-.2-6.2 1.6 1.7-6-.3-.4c-1.1-1.8-1.7-3.9-1.7-6 0-6.3 5.1-11.4 11.4-11.4 3 0 5.9 1.2 8 3.3 2.1 2.1 3.3 5 3.3 8 0 6.3-5.1 11.4-11.4 11.4z" fill="#25D366"></path>
-          </svg>
+          <img src="images/wa.png" alt="WhatsApp" class="w-4 h-4 object-contain" />
           <span data-i18n="common.whatsapp">WhatsApp</span>
         </a>
         <select id="langSelect" class="border rounded-xl px-3 py-2 text-sm">
@@ -133,15 +132,18 @@
           WingBend and WingBend Plus are V-die systems that minimize surface marks while enabling short flanges, consistent angles, and excellent repeatability.
         </p>
       </div>
+
+      <!-- Company / 会社情報 -->
       <div class="rounded-2xl border bg-white p-6">
         <h3 class="font-semibold text-lg" data-i18n="about.company">Company</h3>
         <div class="mt-2 text-slate-600 space-y-1">
-          <div>Tokyo Seimitsu Hatsujo Co., Ltd.</div>
-          <div>Yokohama, Japan</div>
+          <div data-i18n="about.companyName">Tokyo Seimitsu Hatsujo Co., Ltd.</div>
+          <div data-i18n="about.location">Yokohama, Japan</div>
           <div>info@to-hatsu.co.jp</div>
           <div>+81-45-624-9841</div>
         </div>
       </div>
+
       <div class="rounded-2xl border bg-white p-6">
         <h3 class="font-semibold text-lg" data-i18n="about.links">Links</h3>
         <div class="mt-2 text-slate-600 space-y-2">
@@ -149,8 +151,7 @@
             🌐 <span data-i18n="about.website">Website</span>
           </a>
           <div class="text-sm text-slate-500 inline-flex items-center gap-2">
-            <!-- small WA icon -->
-            <svg aria-hidden="true" viewBox="0 0 32 32" width="14" height="14"><path d="M19.9 17.7c-.3-.1-1.8-.9-2.1-1s-.5-.1-.8.3-.9 1-1.1 1.2-.4.2-.7.1c-.3-.1-1.4-.5-2.7-1.7-1-1-1.7-2.2-1.9-2.5s0-.6.2-.7.3-.4.5-.6.2-.3.3-.5 0-.4 0-.6c0-.1-.8-2-1.1-2.8-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4s-1.1 1.1-1.1 2.6 1.1 3 1.3 3.2c.2.3 2.2 3.3 5.2 4.7 2.9 1.4 2.9.9 3.5.9.5 0 1.8-.7 2-1.3.2-.7.2-1.2.1-1.3 0-.1-.2-.1-.5-.2z" fill="#25D366"></path><path d="M27.2 4.8C24.5 2.1 21 0.7 17.2 0.7 9.6 0.7 3.4 6.8 3.4 14.4c0 2.3.6 4.6 1.8 6.6L3 31.3l10.6-2.8c1.9 1 4 1.6 6.1 1.6h0c7.6 0 13.8-6.1 13.8-13.7 0-3.7-1.4-7.2-4.1-9.9zM19.7 27.2h0c-1.9 0-3.7-.5-5.3-1.4l-.4-.2-6.2 1.6 1.7-6-.3-.4c-1.1-1.8-1.7-3.9-1.7-6 0-6.3 5.1-11.4 11.4-11.4 3 0 5.9 1.2 8 3.3 2.1 2.1 3.3 5 3.3 8 0 6.3-5.1 11.4-11.4 11.4z" fill="#25D366"></path></svg>
+            <img src="images/wa.png" alt="WhatsApp" class="w-3.5 h-3.5 object-contain" />
             <span>WhatsApp: +81 802 140 9299</span>
           </div>
         </div>
@@ -232,7 +233,7 @@
         Your browser does not support the video tag.
       </video>
 
-      <!-- YouTube (set YOUTUBE_ID di CONFIG) -->
+      <!-- YouTube -->
       <div id="ytWrap" class="w-full aspect-video rounded-2xl border overflow-hidden hidden">
         <iframe id="ytIframe" width="560" height="315" src="" title="WingBend Video" frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -283,7 +284,7 @@
       </div>
       <div class="flex items-center gap-4">
         <a href="https://wa.me/818021409299" target="_blank" class="hover:opacity-80 inline-flex items-center gap-2">
-          <svg aria-hidden="true" viewBox="0 0 32 32" width="14" height="14"><path d="M19.9 17.7c-.3-.1-1.8-.9-2.1-1s-.5-.1-.8.3-.9 1-1.1 1.2-.4.2-.7.1c-.3-.1-1.4-.5-2.7-1.7-1-1-1.7-2.2-1.9-2.5s0-.6.2-.7.3-.4.5-.6.2-.3.3-.5 0-.4 0-.6c0-.1-.8-2-1.1-2.8-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4s-1.1 1.1-1.1 2.6 1.1 3 1.3 3.2c.2.3 2.2 3.3 5.2 4.7 2.9 1.4 2.9.9 3.5.9.5 0 1.8-.7 2-1.3.2-.7.2-1.2.1-1.3 0-.1-.2-.1-.5-.2z" fill="#25D366"></path><path d="M27.2 4.8C24.5 2.1 21 0.7 17.2 0.7 9.6 0.7 3.4 6.8 3.4 14.4c0 2.3.6 4.6 1.8 6.6L3 31.3l10.6-2.8c1.9 1 4 1.6 6.1 1.6h0c7.6 0 13.8-6.1 13.8-13.7 0-3.7-1.4-7.2-4.1-9.9zM19.7 27.2h0c-1.9 0-3.7-.5-5.3-1.4l-.4-.2-6.2 1.6 1.7-6-.3-.4c-1.1-1.8-1.7-3.9-1.7-6 0-6.3 5.1-11.4 11.4-11.4 3 0 5.9 1.2 8 3.3 2.1 2.1 3.3 5 3.3 8 0 6.3-5.1 11.4-11.4 11.4z" fill="#25D366"></path></svg>
+          <img src="images/wa.png" alt="WhatsApp" class="w-3.5 h-3.5 object-contain" />
           <span data-i18n="common.whatsapp">WhatsApp</span>
         </a>
         <span>Design by Wahyu</span>
@@ -294,7 +295,7 @@
   <!-- Floating WhatsApp -->
   <a href="https://wa.me/818021409299" target="_blank"
      class="btn-wa inline-flex items-center gap-2 rounded-full bg-green-500 text-white px-4 py-2 shadow-lg">
-    <svg aria-hidden="true" viewBox="0 0 32 32" width="16" height="16"><path d="M19.9 17.7c-.3-.1-1.8-.9-2.1-1s-.5-.1-.8.3-.9 1-1.1 1.2-.4.2-.7.1c-.3-.1-1.4-.5-2.7-1.7-1-1-1.7-2.2-1.9-2.5s0-.6.2-.7.3-.4.5-.6.2-.3.3-.5 0-.4 0-.6c0-.1-.8-2-1.1-2.8-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4s-1.1 1.1-1.1 2.6 1.1 3 1.3 3.2c.2.3 2.2 3.3 5.2 4.7 2.9 1.4 2.9.9 3.5.9.5 0 1.8-.7 2-1.3.2-.7.2-1.2.1-1.3 0-.1-.2-.1-.5-.2z" fill="#fff"></path><path d="M27.2 4.8C24.5 2.1 21 0.7 17.2 0.7 9.6 0.7 3.4 6.8 3.4 14.4c0 2.3.6 4.6 1.8 6.6L3 31.3l10.6-2.8c1.9 1 4 1.6 6.1 1.6h0c7.6 0 13.8-6.1 13.8-13.7 0-3.7-1.4-7.2-4.1-9.9zM19.7 27.2h0c-1.9 0-3.7-.5-5.3-1.4l-.4-.2-6.2 1.6 1.7-6-.3-.4c-1.1-1.8-1.7-3.9-1.7-6 0-6.3 5.1-11.4 11.4-11.4 3 0 5.9 1.2 8 3.3 2.1 2.1 3.3 5 3.3 8 0 6.3-5.1 11.4-11.4 11.4z" fill="#fff"></path></svg>
+    <img src="images/wa.png" alt="WhatsApp" class="w-4 h-4 object-contain" />
     <span>WhatsApp</span>
   </a>
 
@@ -361,7 +362,7 @@
 
         <div class="md:col-span-2 text-sm mt-2 hidden" id="successNote">
           ✅ <span data-i18n="form.success">Thanks! Your download will start. If not, use the link below.</span>
-          <div class="mt-1"><a class="underline" href="downloads/wingbend-catalog.pdf" id="fallbackLink">Download manually</a></div>
+          <div class="mt-1"><a class="underline" href="#" id="fallbackLink">Download manually</a></div>
         </div>
       </form>
     </div>
@@ -387,9 +388,8 @@
         about: {
           title:"What is WingBend?",
           copy:"WingBend and WingBend Plus are V-die systems that minimize surface marks while enabling short flanges, consistent angles, and excellent repeatability.",
-          company:"Company",
-          links:"Links",
-          website:"Website"
+          company:"Company", links:"Links", website:"Website",
+          companyName:"Tokyo Seimitsu Hatsujo Co., Ltd.", location:"Yokohama, Japan"
         },
         features: {
           title:"Key Features",
@@ -403,10 +403,7 @@
           title: "WB Series",
           labels: { standard:"STANDARD", heavy:"HEAVY", dieLength:"Die Length", materialThickness:"Material thickness" }
         },
-        video: {
-          title: "WingBend Video / Simulation",
-          note: "Upload file videos/wingbend.mp4 or set YOUTUBE_ID above."
-        },
+        video: { title: "WingBend Video / Simulation", note: "Upload videos/wingbend.mp4 or set YOUTUBE_ID above." },
         how: {
           title:"How to Order",
           steps:[
@@ -424,8 +421,7 @@
           purpose:"Project details or interest (optional)", question:"Inquiry (optional)", faqLabel:"FAQ Topic (optional)",
           faqOptions:{ pricing:"Pricing / Quotation", compatibility:"Compatibility & Press", material:"Material / Thickness", custom:"Custom size / Special", delivery:"Delivery / Lead time", other:"Other" },
           consent:"I agree to receive product updates and communications related to WingBend (you can unsubscribe at any time).",
-          submit:"Get Catalog", cancel:"Cancel",
-          success:"Thanks! Your download will start. If not, use the link below."
+          submit:"Get Catalog", cancel:"Cancel", success:"Thanks! Your download will start. If not, use the link below."
         }
       },
 
@@ -443,9 +439,8 @@
         about: {
           title:"WingBendとは",
           copy:"WingBend／WingBend Plus は、短いフランジ・正確な角度・高い再現性を保ちながら、目視面のキズを抑えるVダイシステムです。",
-          company:"会社情報",
-          links:"リンク",
-          website:"Webサイト"
+          company:"会社情報", links:"リンク", website:"Webサイト",
+          companyName:"東京精密発条株式会社", location:"日本・横浜"
         },
         features: {
           title:"主な特長",
@@ -459,17 +454,10 @@
           title: "WBシリーズ",
           labels: { standard:"STANDARD", heavy:"HEAVY", dieLength:"ダイ長さ", materialThickness:"板厚" }
         },
-        video: {
-          title: "WingBend 動画／シミュレーション",
-          note: "videos/wingbend.mp4 を配置するか、上部の YOUTUBE_ID を設定してください。"
-        },
+        video: { title:"WingBend 動画／シミュレーション", note:"videos/wingbend.mp4 を配置するか、上部の YOUTUBE_ID を設定してください。" },
         how: {
           title:"ご注文の流れ",
-          steps:[
-            "材質・板厚・板幅・ロット等の仕様をご共有ください。",
-            "最適な WingBend 機種とスライダーをご提案します。",
-            "お見積り・納期確定後にご発注ください。"
-          ]
+          steps:["材質・板厚・板幅・ロット等の仕様をご共有ください。","最適な WingBend 機種とスライダーをご提案します。","お見積り・納期確定後にご発注ください。"]
         },
         download:{ title:"WingBend 総合カタログ", copy:"必要事項をご入力いただくと、PDF をすぐにダウンロードできます。" },
         privacy:{ note:"ご提供いただいた情報は資料送付および関連製品のご案内にのみ利用します。配信停止はいつでも可能です。" },
@@ -480,8 +468,7 @@
           purpose:"案件内容・ご関心（任意）", question:"お問い合わせ内容（任意）", faqLabel:"FAQトピック（任意）",
           faqOptions:{ pricing:"価格・御見積", compatibility:"互換性・プレス", material:"材質・板厚", custom:"特注サイズ・特型", delivery:"納期", other:"その他" },
           consent:"WingBend に関するお知らせの受信に同意します（いつでも配信停止可）。",
-          submit:"カタログを取得", cancel:"キャンセル",
-          success:"ありがとうございます。ダウンロードが開始します。開始しない場合は下のリンクをクリックしてください。"
+          submit:"カタログを取得", cancel:"キャンセル", success:"ありがとうございます。ダウンロードが開始します。開始しない場合は下のリンクをクリックしてください。"
         }
       }
     };
@@ -512,14 +499,25 @@
 
     langSelect.addEventListener("change",()=>{ const pref=langSelect.value; localStorage.setItem("wb_lang",pref); applyI18n(resolveLang(pref)); });
 
-    // YouTube
-    if (YOUTUBE_ID) {
-      const wrap=$("#ytWrap"), ifr=$("#ytIframe");
-      ifr.src=`https://www.youtube.com/embed/${YOUTUBE_ID}`;
-      wrap.classList.remove("hidden");
+    // ===== YouTube: dukung URL penuh & ID saja =====
+    function normalizeYouTubeId(input){
+      if(!input) return "";
+      try{
+        const u=new URL(input);
+        if(u.hostname.includes("youtu.be")) return u.pathname.replace("/","");
+        if(u.hostname.includes("youtube.com")) return u.searchParams.get("v")||"";
+      }catch(e){/* not a URL, assume it's already an ID */}
+      return input;
     }
+    (function mountYouTube(){
+      const id = normalizeYouTubeId(YOUTUBE_ID);
+      if(!id) return;
+      const wrap=$("#ytWrap"), ifr=$("#ytIframe");
+      ifr.src=`https://www.youtube.com/embed/${id}`;
+      wrap.classList.remove("hidden");
+    })();
 
-    // UTM & context
+    // ===== UTM & context =====
     function getParam(n){ const u=new URL(location.href); return u.searchParams.get(n)||""; }
     function fillHidden(){
       const set=(id,v)=>{$(id).value=v};
@@ -533,7 +531,7 @@
     }
     fillHidden();
 
-    // Map to Google Form
+    // ===== Map ke Google Form =====
     function mapField(el, entry){ if (el && entry) el.setAttribute("name", entry); }
     function mountForm(){
       leadForm.setAttribute("action", GOOGLE_FORM_ACTION);
@@ -559,11 +557,12 @@
       mapField($("#f_page_url"),FIELD_MAP.page_url);
       mapField($("#f_user_agent"),FIELD_MAP.user_agent);
 
-      fallbackLink.setAttribute("href", CATALOG_URL);
+      // fallback link pakai CATALOG_URL
+      $("#fallbackLink").setAttribute("href", encodeURI(CATALOG_URL));
     }
     mountForm();
 
-    // Auto-download after submit
+    // ===== Auto-download setelah submit =====
     let iframeInitial=true, pending=true;
     hiddenIframe.addEventListener("load",()=>{
       if(iframeInitial){ iframeInitial=false; return; }
@@ -573,7 +572,7 @@
     });
     function startDownload(){
       const a=document.createElement("a");
-      a.href=CATALOG_URL;
+      a.href=encodeURI(CATALOG_URL);
       a.download="";
       document.body.appendChild(a);
       a.click();
