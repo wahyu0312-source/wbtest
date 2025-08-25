@@ -18,16 +18,16 @@
   <style>.modal-open{overflow:hidden}.btn-wa{position:fixed;right:16px;bottom:16px}</style>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-800">
-  <!-- ===== CONFIG (EDIT) ===== -->
+  <!-- ===== CONFIG ===== -->
   <script>
-    // PDF kamu (boleh nama file dengan spasi)
+    // PDF katalog
     const CATALOG_URL = "downloads/e catalog.pdf";
-    // Google Form action
+    // Google Form action (punya kamu)
     const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSekZCgIo6G84zigbytNiPlJCD2hHyFmHAdR7aQw8lxKKYfnfw/formResponse";
-    // YouTube: bisa URL penuh ATAU hanya ID
+    // YouTube: URL penuh ATAU ID (dua-duanya didukung)
     const YOUTUBE_ID = "https://www.youtube.com/watch?v=Jg86i4Kg_QQ";
 
-    // === ENTRY ID dari Google Form (hasil prefilled link kamu) ===
+    // === ENTRY ID dari pre-filled link (punya kamu) ===
     const FIELD_MAP = {
       name:     "entry.231306314",
       company:  "entry.1578264793",
@@ -39,6 +39,8 @@
       inquiry:  "entry.242968373",
       topic:    "entry.507514688",
       agree:    "entry.1788381472",
+
+      // Tambah entry ID di bawah ini hanya jika kamu membuat pertanyaannya di Form.
       utm_source:   "",
       utm_medium:   "",
       utm_campaign: "",
@@ -47,7 +49,8 @@
       page_url:     "",
       user_agent:   "",
     };
-    const CONSENT_VALUE = "Option 1"; // samakan dengan label opsi checkbox di Form
+    // Nilai checkbox harus sama dengan label opsi di Form
+    const CONSENT_VALUE = "Option 1";
   </script>
 
   <!-- ===== Header ===== -->
@@ -133,7 +136,6 @@
         </p>
       </div>
 
-      <!-- Company / 会社情報 -->
       <div class="rounded-2xl border bg-white p-6">
         <h3 class="font-semibold text-lg" data-i18n="about.company">Company</h3>
         <div class="mt-2 text-slate-600 space-y-1">
@@ -233,7 +235,6 @@
         Your browser does not support the video tag.
       </video>
 
-      <!-- YouTube -->
       <div id="ytWrap" class="w-full aspect-video rounded-2xl border overflow-hidden hidden">
         <iframe id="ytIframe" width="560" height="315" src="" title="WingBend Video" frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -318,7 +319,10 @@
         <div><label class="text-sm" data-i18n="form.phone">Phone</label><input class="w-full border rounded-xl px-3 py-2" id="f_phone" /></div>
         <div><label class="text-sm" data-i18n="form.country">Country/Region</label><input class="w-full border rounded-xl px-3 py-2" required id="f_country" /></div>
         <div><label class="text-sm" data-i18n="form.language">Preferred language</label>
-          <select class="w-full border rounded-xl px-3 py-2" id="f_language"><option value="en">English</option><option value="ja">日本語</option></select>
+          <!-- VALUE harus cocok dengan label opsi di Form -->
+          <select class="w-full border rounded-xl px-3 py-2" id="f_language">
+            <option value="English">English</option><option value="日本語">日本語</option>
+          </select>
         </div>
         <div class="md:col-span-2"><label class="text-sm" data-i18n="form.purpose">Project details or interest (optional)</label>
           <textarea class="w-full border rounded-xl px-3 py-2" rows="3" id="f_purpose"></textarea>
@@ -327,12 +331,12 @@
           <label class="text-sm" data-i18n="form.faqLabel">FAQ Topic (optional)</label>
           <select class="w-full border rounded-xl px-3 py-2" id="f_topic">
             <option value="">—</option>
-            <option value="pricing" data-i18n="form.faqOptions.pricing">Pricing / Quotation</option>
-            <option value="compatibility" data-i18n="form.faqOptions.compatibility">Compatibility & Press</option>
-            <option value="material" data-i18n="form.faqOptions.material">Material / Thickness</option>
-            <option value="custom" data-i18n="form.faqOptions.custom">Custom size / Special</option>
-            <option value="delivery" data-i18n="form.faqOptions.delivery">Delivery / Lead time</option>
-            <option value="other" data-i18n="form.faqOptions.other">Other</option>
+            <option value="Pricing / Quotation" data-i18n="form.faqOptions.pricing">Pricing / Quotation</option>
+            <option value="Compatibility & Press" data-i18n="form.faqOptions.compatibility">Compatibility & Press</option>
+            <option value="Material / Thickness" data-i18n="form.faqOptions.material">Material / Thickness</option>
+            <option value="Custom size / Special" data-i18n="form.faqOptions.custom">Custom size / Special</option>
+            <option value="Delivery / Lead time" data-i18n="form.faqOptions.delivery">Delivery / Lead time</option>
+            <option value="Other" data-i18n="form.faqOptions.other">Other</option>
           </select>
         </div>
         <div><label class="text-sm" data-i18n="form.question">Inquiry (optional)</label><input class="w-full border rounded-xl px-3 py-2" id="f_inquiry" /></div>
@@ -374,102 +378,31 @@
   <script>
     const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
     const translations = {
-      en: {
-        common: { whatsapp:"WhatsApp" },
-        nav: { about:"About", features:"Key Features", series:"WB Series", video:"Video", how:"How to Order", download:"Download" },
-        cta: { download:"Download Catalog", how:"How to Order" },
-        hero: {
-          title:"Redefining Mark-Free Forming with WingBend",
-          subtitle:"Achieve beautiful outer radii and short flanges with minimal marking — even near holes, tapered edges, and patterned plates.",
-          trust:"Trusted by precision fabricators worldwide.",
-          imageCaption:"WingBend / WingBend Plus tool concept"
-        },
-        badges: { markFree:"Mark-free bending" },
-        about: {
-          title:"What is WingBend?",
-          copy:"WingBend and WingBend Plus are V-die systems that minimize surface marks while enabling short flanges, consistent angles, and excellent repeatability.",
-          company:"Company", links:"Links", website:"Website",
-          companyName:"Tokyo Seimitsu Hatsujo Co., Ltd.", location:"Yokohama, Japan"
-        },
-        features: {
-          title:"Key Features",
-          items: [
-            { title:"Minimal marking", body:"Mark-free finish on visible surfaces — no rework." },
-            { title:"Near-feature bending", body:"Bend close to holes and edges with stable flanges and exact angles." },
-            { title:"Flexible applications", body:"Ideal for diagonal/tapered bends and chequer plates with consistent quality." }
-          ]
-        },
-        series: {
-          title: "WB Series",
-          labels: { standard:"STANDARD", heavy:"HEAVY", dieLength:"Die Length", materialThickness:"Material thickness" }
-        },
-        video: { title: "WingBend Video / Simulation", note: "Upload videos/wingbend.mp4 or set YOUTUBE_ID above." },
-        how: {
-          title:"How to Order",
-          steps:[
-            "Share sheet specs (material, thickness, width, batch rate).",
-            "We recommend the optimal WingBend model and slider.",
-            "Confirm quotation & delivery, then place PO."
-          ]
-        },
-        download:{ title:"Download the WingBend Catalog", copy:"Fill in your details to receive the PDF instantly." },
-        privacy:{ note:"Your info is used to fulfill your request and relevant product updates. You can opt out anytime." },
-        form:{
-          title:"Before downloading — tell us about you",
-          subtitle:"We’ll send you the latest catalog and product tips.",
-          name:"Full name", company:"Company", email:"Email", phone:"Phone", country:"Country/Region", language:"Preferred language",
-          purpose:"Project details or interest (optional)", question:"Inquiry (optional)", faqLabel:"FAQ Topic (optional)",
-          faqOptions:{ pricing:"Pricing / Quotation", compatibility:"Compatibility & Press", material:"Material / Thickness", custom:"Custom size / Special", delivery:"Delivery / Lead time", other:"Other" },
-          consent:"I agree to receive product updates and communications related to WingBend (you can unsubscribe at any time).",
-          submit:"Get Catalog", cancel:"Cancel", success:"Thanks! Your download will start. If not, use the link below."
-        }
+      en: { common:{whatsapp:"WhatsApp"}, nav:{about:"About",features:"Key Features",series:"WB Series",video:"Video",how:"How to Order",download:"Download"},
+        cta:{download:"Download Catalog",how:"How to Order"},
+        hero:{title:"Redefining Mark-Free Forming with WingBend",subtitle:"Achieve beautiful outer radii and short flanges with minimal marking — even near holes, tapered edges, and patterned plates.",trust:"Trusted by precision fabricators worldwide.",imageCaption:"WingBend / WingBend Plus tool concept"},
+        badges:{markFree:"Mark-free bending"},
+        about:{title:"What is WingBend?",copy:"WingBend and WingBend Plus are V-die systems that minimize surface marks while enabling short flanges, consistent angles, and excellent repeatability.",company:"Company",links:"Links",website:"Website",companyName:"Tokyo Seimitsu Hatsujo Co., Ltd.",location:"Yokohama, Japan"},
+        features:{title:"Key Features",items:[{title:"Minimal marking",body:"Mark-free finish on visible surfaces — no rework."},{title:"Near-feature bending",body:"Bend close to holes and edges with stable flanges and exact angles."},{title:"Flexible applications",body:"Ideal for diagonal/tapered bends and chequer plates with consistent quality."}]},
+        series:{title:"WB Series",labels:{standard:"STANDARD",heavy:"HEAVY",dieLength:"Die Length",materialThickness:"Material thickness"}},
+        video:{title:"WingBend Video / Simulation",note:"Upload videos/wingbend.mp4 or set YOUTUBE_ID above."},
+        how:{title:"How to Order",steps:["Share sheet specs (material, thickness, width, batch rate).","We recommend the optimal WingBend model and slider.","Confirm quotation & delivery, then place PO."]},
+        download:{title:"Download the WingBend Catalog",copy:"Fill in your details to receive the PDF instantly."},
+        privacy:{note:"Your info is used to fulfill your request and relevant product updates. You can opt out anytime."},
+        form:{title:"Before downloading — tell us about you",subtitle:"We’ll send you the latest catalog and product tips.",name:"Full name",company:"Company",email:"Email",phone:"Phone",country:"Country/Region",language:"Preferred language",purpose:"Project details or interest (optional)",question:"Inquiry (optional)",faqLabel:"FAQ Topic (optional)",faqOptions:{pricing:"Pricing / Quotation",compatibility:"Compatibility & Press",material:"Material / Thickness",custom:"Custom size / Special",delivery:"Delivery / Lead time",other:"Other"},consent:"I agree to receive product updates and communications related to WingBend (you can unsubscribe at any time).",submit:"Get Catalog",cancel:"Cancel",success:"Thanks! Your download will start. If not, use the link below."}
       },
-
-      ja: {
-        common: { whatsapp:"WhatsApp" },
-        nav: { about:"概要", features:"特長", series:"WBシリーズ", video:"動画", how:"注文方法", download:"カタログ" },
-        cta: { download:"カタログをダウンロード", how:"注文方法" },
-        hero: {
-          title:"WingBendで“キズなし曲げ”をスタンダードに",
-          subtitle:"穴や端部に近い曲げ、テーパー、縞板でも、美しい外Rと短いフランジを安定して実現します。",
-          trust:"国内外の精密板金メーカーで採用が進んでいます。",
-          imageCaption:"WingBend / WingBend Plus のコンセプト"
-        },
-        badges: { markFree:"キズなし曲げ" },
-        about: {
-          title:"WingBendとは",
-          copy:"WingBend／WingBend Plus は、短いフランジ・正確な角度・高い再現性を保ちながら、目視面のキズを抑えるVダイシステムです。",
-          company:"会社情報", links:"リンク", website:"Webサイト",
-          companyName:"東京精密発条株式会社", location:"日本・横浜"
-        },
-        features: {
-          title:"主な特長",
-          items: [
-            { title:"目視面のキズを抑制", body:"外観部品でも後処理を最小化できます。" },
-            { title:"穴・縁に近い曲げ", body:"穴や端部の近傍でも安定したフランジと角度を確保。" },
-            { title:"幅広い適用", body:"斜め・テーパー・縞板など難素材でも均一な品質を実現。" }
-          ]
-        },
-        series: {
-          title: "WBシリーズ",
-          labels: { standard:"STANDARD", heavy:"HEAVY", dieLength:"ダイ長さ", materialThickness:"板厚" }
-        },
-        video: { title:"WingBend 動画／シミュレーション", note:"videos/wingbend.mp4 を配置するか、上部の YOUTUBE_ID を設定してください。" },
-        how: {
-          title:"ご注文の流れ",
-          steps:["材質・板厚・板幅・ロット等の仕様をご共有ください。","最適な WingBend 機種とスライダーをご提案します。","お見積り・納期確定後にご発注ください。"]
-        },
-        download:{ title:"WingBend 総合カタログ", copy:"必要事項をご入力いただくと、PDF をすぐにダウンロードできます。" },
-        privacy:{ note:"ご提供いただいた情報は資料送付および関連製品のご案内にのみ利用します。配信停止はいつでも可能です。" },
-        form:{
-          title:"ダウンロードの前に — ご連絡先",
-          subtitle:"最新版カタログと活用ヒントをお送りします。",
-          name:"氏名", company:"会社名", email:"メール", phone:"電話番号", country:"国／地域", language:"希望言語",
-          purpose:"案件内容・ご関心（任意）", question:"お問い合わせ内容（任意）", faqLabel:"FAQトピック（任意）",
-          faqOptions:{ pricing:"価格・御見積", compatibility:"互換性・プレス", material:"材質・板厚", custom:"特注サイズ・特型", delivery:"納期", other:"その他" },
-          consent:"WingBend に関するお知らせの受信に同意します（いつでも配信停止可）。",
-          submit:"カタログを取得", cancel:"キャンセル", success:"ありがとうございます。ダウンロードが開始します。開始しない場合は下のリンクをクリックしてください。"
-        }
+      ja: { common:{whatsapp:"WhatsApp"}, nav:{about:"概要",features:"特長",series:"WBシリーズ",video:"動画",how:"注文方法",download:"カタログ"},
+        cta:{download:"カタログをダウンロード",how:"注文方法"},
+        hero:{title:"WingBendで“キズなし曲げ”をスタンダードに",subtitle:"穴や端部に近い曲げ、テーパー、縞板でも、美しい外Rと短いフランジを安定して実現します。",trust:"国内外の精密板金メーカーで採用が進んでいます。",imageCaption:"WingBend / WingBend Plus のコンセプト"},
+        badges:{markFree:"キズなし曲げ"},
+        about:{title:"WingBendとは",copy:"WingBend／WingBend Plus は、短いフランジ・正確な角度・高い再現性を保ちながら、目視面のキズを抑えるVダイシステムです。",company:"会社情報",links:"リンク",website:"Webサイト",companyName:"東京精密発条株式会社",location:"日本・横浜"},
+        features:{title:"主な特長",items:[{title:"目視面のキズを抑制",body:"外観部品でも後処理を最小化できます。"},{title:"穴・縁に近い曲げ",body:"穴や端部の近傍でも安定したフランジと角度を確保。"},{title:"幅広い適用",body:"斜め・テーパー・縞板など難素材でも均一な品質を実現。"}]},
+        series:{title:"WBシリーズ",labels:{standard:"STANDARD",heavy:"HEAVY",dieLength:"ダイ長さ",materialThickness:"板厚"}},
+        video:{title:"WingBend 動画／シミュレーション",note:"videos/wingbend.mp4 を配置するか、上部の YOUTUBE_ID を設定してください。"},
+        how:{title:"ご注文の流れ",steps:["材質・板厚・板幅・ロット等の仕様をご共有ください。","最適な WingBend 機種とスライダーをご提案します。","お見積り・納期確定後にご発注ください。"]},
+        download:{title:"WingBend 総合カタログ",copy:"必要事項をご入力いただくと、PDF をすぐにダウンロードできます。"},
+        privacy:{note:"ご提供いただいた情報は資料送付および関連製品のご案内にのみ利用します。配信停止はいつでも可能です。"},
+        form:{title:"ダウンロードの前に — ご連絡先",subtitle:"最新版カタログと活用ヒントをお送りします。",name:"氏名",company:"会社名",email:"メール",phone:"電話番号",country:"国／地域",language:"希望言語",purpose:"案件内容・ご関心（任意）",question:"お問い合わせ内容（任意）",faqLabel:"FAQトピック（任意）",faqOptions:{pricing:"価格・御見積",compatibility:"互換性・プレス",material:"材質・板厚",custom:"特注サイズ・特型",delivery:"納期",other:"その他"},consent:"WingBend に関するお知らせの受信に同意します（いつでも配信停止可）。",submit:"カタログを取得",cancel:"キャンセル",success:"ありがとうございます。ダウンロードが開始します。開始しない場合は下のリンクをクリックしてください。"}
       }
     };
 
@@ -483,7 +416,8 @@
         let cur=t; for(const k of keys) cur=cur?.[k];
         if(typeof cur==="string") el.textContent=cur;
       });
-      $("#f_language") && ($("#f_language").value=lang);
+      // Pastikan value yang dikirim cocok dengan opsi Form
+      if ($("#f_language")) { $("#f_language").value = (lang==='ja') ? '日本語' : 'English'; }
     }
 
     function openModal(){ modal.classList.remove("hidden"); document.documentElement.classList.add("modal-open"); }
@@ -499,14 +433,14 @@
 
     langSelect.addEventListener("change",()=>{ const pref=langSelect.value; localStorage.setItem("wb_lang",pref); applyI18n(resolveLang(pref)); });
 
-    // ===== YouTube: dukung URL penuh & ID saja =====
+    // ===== YouTube: dukung URL & ID =====
     function normalizeYouTubeId(input){
       if(!input) return "";
       try{
         const u=new URL(input);
         if(u.hostname.includes("youtu.be")) return u.pathname.replace("/","");
         if(u.hostname.includes("youtube.com")) return u.searchParams.get("v")||"";
-      }catch(e){/* not a URL, assume it's already an ID */}
+      }catch(e){ /* input bukan URL, asumsikan ID */ }
       return input;
     }
     (function mountYouTube(){
@@ -535,6 +469,7 @@
     function mapField(el, entry){ if (el && entry) el.setAttribute("name", entry); }
     function mountForm(){
       leadForm.setAttribute("action", GOOGLE_FORM_ACTION);
+
       mapField($("#f_name"),FIELD_MAP.name);
       mapField($("#f_company"),FIELD_MAP.company);
       mapField($("#f_email"),FIELD_MAP.email);
@@ -545,10 +480,11 @@
       mapField($("#f_topic"),FIELD_MAP.topic);
       mapField($("#f_inquiry"),FIELD_MAP.inquiry);
 
+      // consent
       $("#f_agree").setAttribute("name", FIELD_MAP.agree);
       $("#f_agree").addEventListener("change",(e)=>{ e.target.value = e.target.checked ? CONSENT_VALUE : ""; });
 
-      // hidden context
+      // hidden context (isi entry ID kalau pertanyaannya ada di Form)
       mapField($("#f_utm_source"),FIELD_MAP.utm_source);
       mapField($("#f_utm_medium"),FIELD_MAP.utm_medium);
       mapField($("#f_utm_campaign"),FIELD_MAP.utm_campaign);
@@ -557,8 +493,10 @@
       mapField($("#f_page_url"),FIELD_MAP.page_url);
       mapField($("#f_user_agent"),FIELD_MAP.user_agent);
 
-      // fallback link pakai CATALOG_URL
       $("#fallbackLink").setAttribute("href", encodeURI(CATALOG_URL));
+
+      // mode debug: tampilkan halaman "Thanks" Google Form
+      if (getParam('debug') === '1') { leadForm.removeAttribute('target'); }
     }
     mountForm();
 
