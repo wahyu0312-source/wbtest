@@ -20,38 +20,16 @@
 <body class="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-800">
   <!-- ===== CONFIG ===== -->
   <script>
-    // PDF katalog (letakkan file-nya di /downloads)
+    // PDF katalog (letakkan file di /downloads)
     const CATALOG_URL = "downloads/e catalog.pdf";
 
-    // Google Form action (punya kamu)
-    const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSekZCgIo6G84zigbytNiPlJCD2hHyFmHAdR7aQw8lxKKYfnfw/formResponse";
+    // ==== GANTI: taruh URL Web App Apps Script kamu di sini (yang /exec) ====
+    const SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
 
-    // YouTube: URL penuh ATAU ID, dua-duanya didukung
-    const YOUTUBE_INPUT = "https://www.youtube.com/watch?v=Jg86i4Kg_QQ";
+    // YouTube opsional (bisa ID atau URL). Kosongkan jika tidak dipakai.
+    const YOUTUBE_INPUT = ""; // contoh URL/ID: "https://www.youtube.com/watch?v=Jg86i4Kg_QQ"
 
-    // === ENTRY ID dari pre-filled link (punya kamu) ===
-    const FIELD_MAP = {
-      name:     "entry.231306314",
-      company:  "entry.1578264793",
-      email:    "entry.1046818384",
-      phone:    "entry.1693019043",
-      country:  "entry.1510398868",
-      language: "entry.1021757773",
-      purpose:  "entry.1774453702",
-      inquiry:  "entry.242968373",
-      topic:    "entry.507514688",
-      agree:    "entry.1788381472",
-
-      // Tambah entry ID di bawah ini hanya jika kamu membuat pertanyaannya di Form.
-      utm_source:   "",
-      utm_medium:   "",
-      utm_campaign: "",
-      utm_term:     "",
-      utm_content:  "",
-      page_url:     "",
-      user_agent:   "",
-    };
-    // Nilai checkbox harus sama dengan label opsi di Form
+    // === Nilai checkbox (harus sama dengan label opsi di Form / atau mau simpan ke Sheet) ===
     const CONSENT_VALUE = "Option 1";
   </script>
 
@@ -232,19 +210,18 @@
   <section id="video" class="max-w-6xl mx-auto px-4 py-10">
     <h2 class="text-2xl font-semibold mb-4" data-i18n="video.title">WingBend Video / Simulation</h2>
     <div class="grid md:grid-cols-2 gap-6 items-start">
+      <!-- video lokal -->
       <video controls class="w-full rounded-2xl border bg-black" poster="images/AB_WingbendMA_EN.png">
-        <source src="videos/wingbend.mp4" type="video/mp4" />
+        <source src="video/wbp.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
+      <!-- YouTube (opsional) -->
       <div id="ytWrap" class="w-full aspect-video rounded-2xl border overflow-hidden hidden">
         <iframe id="ytIframe" width="560" height="315" src="" title="WingBend Video" frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
     </div>
-    <p class="text-sm text-slate-500 mt-2" data-i18n="video.note">
-      Upload file <code>videos/wingbend.mp4</code> atau set <code>YOUTUBE</code> di bagian CONFIG.
-    </p>
   </section>
 
   <!-- ===== How to Order ===== -->
@@ -312,17 +289,13 @@
       </div>
       <div class="text-slate-600 mb-4" data-i18n="form.subtitle">We’ll send you the latest catalog and product tips.</div>
 
-      <!-- optional iframe (hanya untuk debug=1) -->
-      <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-
-      <form id="leadForm" class="grid grid-cols-1 md:grid-cols-2 gap-4" method="POST" target="hidden_iframe">
+      <form id="leadForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div><label class="text-sm" data-i18n="form.name">Full name</label><input class="w-full border rounded-xl px-3 py-2" required id="f_name" /></div>
         <div><label class="text-sm" data-i18n="form.company">Company</label><input class="w-full border rounded-xl px-3 py-2" required id="f_company" /></div>
         <div><label class="text-sm" data-i18n="form.email">Email</label><input class="w-full border rounded-xl px-3 py-2" type="email" required id="f_email" /></div>
         <div><label class="text-sm" data-i18n="form.phone">Phone</label><input class="w-full border rounded-xl px-3 py-2" id="f_phone" /></div>
         <div><label class="text-sm" data-i18n="form.country">Country/Region</label><input class="w-full border rounded-xl px-3 py-2" required id="f_country" /></div>
         <div><label class="text-sm" data-i18n="form.language">Preferred language</label>
-          <!-- VALUE harus cocok dengan label opsi di Form -->
           <select class="w-full border rounded-xl px-3 py-2" id="f_language">
             <option value="English">English</option>
             <option value="日本語">日本語</option>
@@ -361,9 +334,6 @@
         <input type="hidden" id="f_page_url" />
         <input type="hidden" id="f_user_agent" />
 
-        <!-- penting untuk beberapa Form -->
-        <input type="hidden" name="submit" value="Submit" />
-
         <div class="md:col-span-2 flex justify-end gap-3 mt-2">
           <button type="button" class="px-4 py-2 rounded-xl border" data-close="1" data-i18n="form.cancel">Cancel</button>
           <button type="submit" class="px-4 py-2 rounded-xl bg-slate-900 text-white" id="submitBtn">
@@ -381,50 +351,44 @@
 
   <noscript><div class="max-w-6xl mx-auto p-4 text-red-600">This page requires JavaScript to submit the form and start the download.</div></noscript>
 
-  <!-- ===== JS (i18n + form + youtube + fetch submit) ===== -->
+  <!-- ===== JS (i18n + submit ke Apps Script) ===== -->
   <script>
     const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
     const translations = {
-      en: { common:{whatsapp:"WhatsApp"}, nav:{about:"About",features:"Key Features",series:"WB Series",video:"Video",how:"How to Order",download:"Download"},
+      en:{common:{whatsapp:"WhatsApp"},nav:{about:"About",features:"Key Features",series:"WB Series",video:"Video",how:"How to Order",download:"Download"},
         cta:{download:"Download Catalog",how:"How to Order"},
         hero:{title:"Redefining Mark-Free Forming with WingBend",subtitle:"Achieve beautiful outer radii and short flanges with minimal marking — even near holes, tapered edges, and patterned plates.",trust:"Trusted by precision fabricators worldwide.",imageCaption:"WingBend / WingBend Plus tool concept"},
         badges:{markFree:"Mark-free bending"},
         about:{title:"What is WingBend?",copy:"WingBend and WingBend Plus are V-die systems that minimize surface marks while enabling short flanges, consistent angles, and excellent repeatability.",company:"Company",links:"Links",website:"Website",companyName:"Tokyo Seimitsu Hatsujo Co., Ltd.",location:"Yokohama, Japan"},
         features:{title:"Key Features",items:[{title:"Minimal marking",body:"Mark-free finish on visible surfaces — no rework."},{title:"Near-feature bending",body:"Bend close to holes and edges with stable flanges and exact angles."},{title:"Flexible applications",body:"Ideal for diagonal/tapered bends and chequer plates with consistent quality."}]},
         series:{title:"WB Series",labels:{standard:"STANDARD",heavy:"HEAVY",dieLength:"Die Length",materialThickness:"Material thickness"}},
-        video:{title:"WingBend Video / Simulation",note:"Upload videos/wingbend.mp4 or set YouTube above."},
+        video:{title:"WingBend Video / Simulation"},
         how:{title:"How to Order",steps:["Share sheet specs (material, thickness, width, batch rate).","We recommend the optimal WingBend model and slider.","Confirm quotation & delivery, then place PO."]},
         download:{title:"Download the WingBend Catalog",copy:"Fill in your details to receive the PDF instantly."},
         privacy:{note:"Your info is used to fulfill your request and relevant product updates. You can opt out anytime."},
         form:{title:"Before downloading — tell us about you",subtitle:"We’ll send you the latest catalog and product tips.",name:"Full name",company:"Company",email:"Email",phone:"Phone",country:"Country/Region",language:"Preferred language",purpose:"Project details or interest (optional)",question:"Inquiry (optional)",faqLabel:"FAQ Topic (optional)",faqOptions:{pricing:"Pricing / Quotation",compatibility:"Compatibility & Press",material:"Material / Thickness",custom:"Custom size / Special",delivery:"Delivery / Lead time",other:"Other"},consent:"I agree to receive product updates and communications related to WingBend (you can unsubscribe at any time).",submit:"Get Catalog",cancel:"Cancel",success:"Thanks! Your download will start. If not, use the link below."}
       },
-      ja: { common:{whatsapp:"WhatsApp"}, nav:{about:"概要",features:"特長",series:"WBシリーズ",video:"動画",how:"注文方法",download:"カタログ"},
+      ja:{common:{whatsapp:"WhatsApp"},nav:{about:"概要",features:"特長",series:"WBシリーズ",video:"動画",how:"注文方法",download:"カタログ"},
         cta:{download:"カタログをダウンロード",how:"注文方法"},
         hero:{title:"WingBendで“キズなし曲げ”をスタンダードに",subtitle:"穴や端部に近い曲げ、テーパー、縞板でも、美しい外Rと短いフランジを安定して実現します。",trust:"国内外の精密板金メーカーで採用が進んでいます。",imageCaption:"WingBend / WingBend Plus のコンセプト"},
         badges:{markFree:"キズなし曲げ"},
         about:{title:"WingBendとは",copy:"WingBend／WingBend Plus は、短いフランジ・正確な角度・高い再現性を保ちながら、目視面のキズを抑えるVダイシステムです。",company:"会社情報",links:"リンク",website:"Webサイト",companyName:"東京精密発条株式会社",location:"日本・横浜"},
         features:{title:"主な特長",items:[{title:"目視面のキズを抑制",body:"外観部品でも後処理を最小化できます。"},{title:"穴・縁に近い曲げ",body:"穴や端部の近傍でも安定したフランジと角度を確保。"},{title:"幅広い適用",body:"斜め・テーパー・縞板など難素材でも均一な品質を実現。"}]},
         series:{title:"WBシリーズ",labels:{standard:"STANDARD",heavy:"HEAVY",dieLength:"ダイ長さ",materialThickness:"板厚"}},
-        video:{title:"WingBend 動画／シミュレーション",note:"videos/wingbend.mp4 を配置するか、上部の YouTube を設定してください。"},
-        how:{title:"ご注文の流れ",steps:["材質・板厚・板幅・ロット等の仕様をご共有ください。","最適な WingBend 機種とスライダーをご提案します。","お見積り・納期確定後にご発注ください。"]},
-        download:{title:"WingBend 総合カタログ",copy:"必要事項をご入力いただくと、PDF をすぐにダウンロードできます。"},
-        privacy:{note:"ご提供いただいた情報は資料送付および関連製品のご案内にのみ利用します。配信停止はいつでも可能です。"},
-        form:{title:"ダウンロードの前に — ご連絡先",subtitle:"最新版カタログと活用ヒントをお送りします。",name:"氏名",company:"会社名",email:"メール",phone:"電話番号",country:"国／地域",language:"希望言語",purpose:"案件内容・ご関心（任意）",question:"お問い合わせ内容（任意）",faqLabel:"FAQトピック（任意）",faqOptions:{pricing:"価格・御見積",compatibility:"互換性・プレス",material:"材質・板厚",custom:"特注サイズ・特型",delivery:"納期",other:"その他"},consent:"WingBend に関するお知らせの受信に同意します（いつでも配信停止可）。",submit:"カタログを取得",cancel:"キャンセル",success:"ありがとうございます。ダウンロードが開始します。開始しない場合は下のリンクをクリックしてください。"}
       }
     };
 
-    const modal=$("#modal"), openers=["#openModal","#openModal2","#openModal3"].map(id=>$(id)), year=$("#year"), langSelect=$("#langSelect"), leadForm=$("#leadForm"), hiddenIframe=$("#hidden_iframe"), successNote=$("#successNote"), fallbackLink=$("#fallbackLink");
+    const modal=$("#modal"), openers=["#openModal","#openModal2","#openModal3"].map(id=>$(id)), year=$("#year"), langSelect=$("#langSelect"), leadForm=$("#leadForm"), successNote=$("#successNote"), fallbackLink=$("#fallbackLink");
 
     function resolveLang(pref){ if(pref!=="auto") return pref; const n=navigator.language||(navigator.languages&&navigator.languages[0])||"en"; return n.toLowerCase().startsWith("ja")?"ja":"en"; }
     function applyI18n(lang){
-      const t=translations[lang];
+      const t=translations[lang]||translations.en;
       $$("[data-i18n]").forEach(el=>{
         const keys=el.getAttribute("data-i18n").split(".");
         let cur=t; for(const k of keys) cur=cur?.[k];
         if(typeof cur==="string") el.textContent=cur;
       });
-      // Pastikan value yang dikirim cocok dengan opsi Form
-      if ($("#f_language")) { $("#f_language").value = (lang==='ja') ? '日本語' : 'English'; }
+      if ($("#f_language")) $("#f_language").value = (lang==='ja') ? '日本語' : 'English';
     }
 
     function openModal(){ modal.classList.remove("hidden"); document.documentElement.classList.add("modal-open"); }
@@ -437,111 +401,77 @@
     langSelect.value=savedLang;
     const activeLang=resolveLang(savedLang);
     applyI18n(activeLang);
-
     langSelect.addEventListener("change",()=>{ const pref=langSelect.value; localStorage.setItem("wb_lang",pref); applyI18n(resolveLang(pref)); });
 
-    // ===== YouTube: dukung URL & ID =====
+    // YouTube (opsional)
     function normalizeYouTubeId(input){
       if(!input) return "";
-      try{
-        const u=new URL(input);
+      try{ const u=new URL(input);
         if(u.hostname.includes("youtu.be")) return u.pathname.replace("/","");
         if(u.hostname.includes("youtube.com")) return u.searchParams.get("v")||"";
-      }catch(e){ /* input bukan URL, asumsikan ID */ }
+      }catch(e){ return input; }
       return input;
     }
     (function mountYouTube(){
       const id = normalizeYouTubeId(YOUTUBE_INPUT);
       if(!id) return;
-      const wrap=$("#ytWrap"), ifr=$("#ytIframe");
-      ifr.src=`https://www.youtube.com/embed/${id}`;
-      wrap.classList.remove("hidden");
+      $("#ytIframe").src=`https://www.youtube.com/embed/${id}`;
+      $("#ytWrap").classList.remove("hidden");
     })();
 
-    // ===== UTM & context =====
+    // UTM & context
     function getParam(n){ const u=new URL(location.href); return u.searchParams.get(n)||""; }
-    function fillHidden(){
-      const set=(id,v)=>{$(id).value=v};
-      set("#f_utm_source",getParam("utm_source"));
-      set("#f_utm_medium",getParam("utm_medium"));
-      set("#f_utm_campaign",getParam("utm_campaign"));
-      set("#f_utm_term",getParam("utm_term"));
-      set("#f_utm_content",getParam("utm_content"));
-      set("#f_page_url",location.href);
-      set("#f_user_agent",navigator.userAgent);
+    function ctx(){
+      return {
+        utm_source:getParam("utm_source"),
+        utm_medium:getParam("utm_medium"),
+        utm_campaign:getParam("utm_campaign"),
+        utm_term:getParam("utm_term"),
+        utm_content:getParam("utm_content"),
+        page_url:location.href,
+        user_agent:navigator.userAgent
+      };
     }
-    fillHidden();
+    fallbackLink.href = encodeURI(CATALOG_URL);
 
-    // ===== Map ke Google Form =====
-    function mapField(el, entry){ if (el && entry) el.setAttribute("name", entry); }
-    function mountForm(){
-      leadForm.setAttribute("action", GOOGLE_FORM_ACTION);
-
-      mapField($("#f_name"),FIELD_MAP.name);
-      mapField($("#f_company"),FIELD_MAP.company);
-      mapField($("#f_email"),FIELD_MAP.email);
-      mapField($("#f_phone"),FIELD_MAP.phone);
-      mapField($("#f_country"),FIELD_MAP.country);
-      mapField($("#f_language"),FIELD_MAP.language);
-      mapField($("#f_purpose"),FIELD_MAP.purpose);
-      mapField($("#f_topic"),FIELD_MAP.topic);
-      mapField($("#f_inquiry"),FIELD_MAP.inquiry);
-
-      // consent
-      $("#f_agree").setAttribute("name", FIELD_MAP.agree);
-
-      // hidden context (isi entry ID kalau pertanyaannya ada di Form)
-      mapField($("#f_utm_source"),FIELD_MAP.utm_source);
-      mapField($("#f_utm_medium"),FIELD_MAP.utm_medium);
-      mapField($("#f_utm_campaign"),FIELD_MAP.utm_campaign);
-      mapField($("#f_utm_term"),FIELD_MAP.utm_term);
-      mapField($("#f_utm_content"),FIELD_MAP.utm_content);
-      mapField($("#f_page_url"),FIELD_MAP.page_url);
-      mapField($("#f_user_agent"),FIELD_MAP.user_agent);
-
-      $("#fallbackLink").setAttribute("href", encodeURI(CATALOG_URL));
-
-      // mode debug: tampilkan halaman "Thanks" Google Form
-      if (getParam('debug') === '1') { leadForm.removeAttribute('target'); }
+    // submit ke Apps Script
+    async function sendToSheet(payload){
+      if(!SCRIPT_URL){ console.warn("SCRIPT_URL belum diisi."); return false; }
+      try{
+        await fetch(SCRIPT_URL, {
+          method:'POST',
+          mode:'no-cors',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify(payload)
+        });
+        return true;
+      }catch(e){ console.warn(e); return false; }
     }
-    mountForm();
 
-    // --- helper download ---
-    function startDownload(){
+    leadForm.addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      const consent = $("#f_agree").checked ? CONSENT_VALUE : "";
+      const data = {
+        name: $("#f_name").value.trim(),
+        company: $("#f_company").value.trim(),
+        email: $("#f_email").value.trim(),
+        phone: $("#f_phone").value.trim(),
+        country: $("#f_country").value.trim(),
+        language: $("#f_language").value,
+        purpose: $("#f_purpose").value.trim(),
+        topic: $("#f_topic").value,
+        inquiry: $("#f_inquiry").value.trim(),
+        consent,
+        ...ctx()
+      };
+      await sendToSheet(data);
+      successNote.classList.remove("hidden");
+      // auto download
       const a=document.createElement("a");
       a.href=encodeURI(CATALOG_URL);
       a.download="";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    }
-
-    // kirim via fetch no-cors agar stabil
-    async function sendToGoogleForm(){
-      // set nilai consent & language agar match label di Form
-      const agreeEl = $("#f_agree");
-      if (agreeEl && agreeEl.checked) agreeEl.value = CONSENT_VALUE;
-
-      const langEl = $("#f_language");
-      if (langEl) langEl.value = (langEl.value==='日本語' || langEl.value==='ja') ? '日本語' : 'English';
-
-      const fd = new FormData(leadForm);
-      try {
-        await fetch(GOOGLE_FORM_ACTION, { method:'POST', mode:'no-cors', body: fd });
-      } catch(e) { console.warn('Submit error (ignored due to no-cors):', e); }
-    }
-
-    // submit handler baru
-    (function attachSubmit(){
-      const debug = getParam('debug') === '1';
-      leadForm.addEventListener('submit', async (ev)=>{
-        if (debug) return; // biar lihat halaman "Thanks" Google
-        ev.preventDefault();
-        await sendToGoogleForm();
-        $("#successNote").classList.remove("hidden");
-        startDownload();
-      }, { passive:false });
-    })();
+      document.body.appendChild(a); a.click(); a.remove();
+    });
   </script>
 </body>
 </html>
