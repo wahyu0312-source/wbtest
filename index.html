@@ -23,11 +23,11 @@
     // PDF katalog (letakkan file di /downloads)
     const CATALOG_URL = "downloads/e catalog.pdf";
 
-    // ==== GANTI: taruh URL Web App Apps Script kamu di sini (yang /exec) ====
+    // ==== URL Web App Apps Script(exec) ====
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxaa6UY8SwusVafX8w59JqzBVXHhJRxHCc9VF-2ASEij7ml9CKBwrVxOSee2lUNUuwA/exec";
 
     // YouTube opsional (bisa ID atau URL). Kosongkan jika tidak dipakai.
-    const YOUTUBE_INPUT = ""; // contoh URL/ID: "https://www.youtube.com/watch?v=Jg86i4Kg_QQ"
+    const YOUTUBE_INPUT = "https://www.youtube.com/watch?v=Jg86i4Kg_QQ"; // contoh URL/ID: "https://www.youtube.com/watch?v=Jg86i4Kg_QQ"
 
     // === Nilai checkbox (harus sama dengan label opsi di Form / atau mau simpan ke Sheet) ===
     const CONSENT_VALUE = "Option 1";
@@ -40,7 +40,7 @@
         <img src="images/tsh.png" alt="TSH logo" class="w-10 h-10 object-contain" />
         <div class="leading-tight">
           <div class="font-semibold">Tokyo Seimitsu Hatsujo</div>
-          <div class="text-xs text-slate-500">to-hatsu.co.jp</div>
+          <div class="text-xs text-slate-500">東京精密発條株式会社</div>
         </div>
       </a>
 
@@ -212,7 +212,7 @@
     <div class="grid md:grid-cols-2 gap-6 items-start">
       <!-- video lokal -->
       <video controls class="w-full rounded-2xl border bg-black" poster="images/AB_WingbendMA_EN.png">
-        <source src="video/wbp.mp4" type="video/mp4" />
+        <source src="videos/wbp.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
@@ -475,5 +475,6 @@
   </script>
 </body>
 </html>
+
 
 
