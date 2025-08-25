@@ -20,9 +20,9 @@
 <body class="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-800">
   <!-- ===== CONFIG (EDIT) ===== -->
   <script>
-    const CATALOG_URL = "downloads/e catalog.pdf"; // PDF katalog (sudah ada)
+    const CATALOG_URL = "downloads/e catalog.pdf";
     const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSekZCgIo6G84zigbytNiPlJCD2hHyFmHAdR7aQw8lxKKYfnfw/formResponse";
-    const YOUTUBE_ID = ""; // isi kalau mau embed YouTube, contoh: "https://www.youtube.com/watch?v=Jg86i4Kg_QQ"
+    const YOUTUBE_ID = "https://www.youtube.com/watch?v=Jg86i4Kg_QQ";
 
     // === ENTRY ID dari Google Form (hasil prefilled link kamu) ===
     const FIELD_MAP = {
@@ -31,13 +31,11 @@
       email:    "entry.1046818384",
       phone:    "entry.1693019043",
       country:  "entry.1510398868",
-      language: "entry.1021757773",   // English / 日本語
-      purpose:  "entry.1774453702",   // Project details (optional)
-      inquiry:  "entry.242968373",    // Inquiry (optional)
-      topic:    "entry.507514688",    // FAQ Topic
-      agree:    "entry.1788381472",   // Checkbox consent
-
-      // Tidak ada pertanyaan UTM di Form saat ini → biarkan kosong
+      language: "entry.1021757773",
+      purpose:  "entry.1774453702",
+      inquiry:  "entry.242968373",
+      topic:    "entry.507514688",
+      agree:    "entry.1788381472",
       utm_source:   "",
       utm_medium:   "",
       utm_campaign: "",
@@ -46,9 +44,7 @@
       page_url:     "",
       user_agent:   "",
     };
-
-    // Nilai teks untuk checkbox consent di Google Form (harus sama persis)
-    const CONSENT_VALUE = "Option 1";
+    const CONSENT_VALUE = "Option 1"; // samakan dengan label opsi checkbox di Form
   </script>
 
   <!-- ===== Header ===== -->
@@ -72,7 +68,15 @@
       </nav>
 
       <div class="flex items-center gap-2">
-        <a href="https://wa.me/818021409299" target="_blank" class="rounded-2xl border px-3 py-2 text-sm">WhatsApp</a>
+        <a href="https://wa.me/818021409299" target="_blank"
+           class="rounded-2xl border px-3 py-2 text-sm inline-flex items-center gap-2">
+          <!-- WhatsApp icon (SVG) -->
+          <svg aria-hidden="true" viewBox="0 0 32 32" width="16" height="16">
+            <path d="M19.9 17.7c-.3-.1-1.8-.9-2.1-1s-.5-.1-.8.3-.9 1-1.1 1.2-.4.2-.7.1c-.3-.1-1.4-.5-2.7-1.7-1-1-1.7-2.2-1.9-2.5s0-.6.2-.7.3-.4.5-.6.2-.3.3-.5 0-.4 0-.6c0-.1-.8-2-1.1-2.8-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4s-1.1 1.1-1.1 2.6 1.1 3 1.3 3.2c.2.3 2.2 3.3 5.2 4.7 2.9 1.4 2.9.9 3.5.9.5 0 1.8-.7 2-1.3.2-.7.2-1.2.1-1.3 0-.1-.2-.1-.5-.2z" fill="#25D366"></path>
+            <path d="M27.2 4.8C24.5 2.1 21 0.7 17.2 0.7 9.6 0.7 3.4 6.8 3.4 14.4c0 2.3.6 4.6 1.8 6.6L3 31.3l10.6-2.8c1.9 1 4 1.6 6.1 1.6h0c7.6 0 13.8-6.1 13.8-13.7 0-3.7-1.4-7.2-4.1-9.9zM19.7 27.2h0c-1.9 0-3.7-.5-5.3-1.4l-.4-.2-6.2 1.6 1.7-6-.3-.4c-1.1-1.8-1.7-3.9-1.7-6 0-6.3 5.1-11.4 11.4-11.4 3 0 5.9 1.2 8 3.3 2.1 2.1 3.3 5 3.3 8 0 6.3-5.1 11.4-11.4 11.4z" fill="#25D366"></path>
+          </svg>
+          <span data-i18n="common.whatsapp">WhatsApp</span>
+        </a>
         <select id="langSelect" class="border rounded-xl px-3 py-2 text-sm">
           <option value="auto">🌐 Auto</option>
           <option value="en">🇬🇧 English</option>
@@ -98,7 +102,9 @@
         <button id="openModal2" class="rounded-2xl bg-slate-900 text-white px-5 py-3 text-base">
           ⬇ <span data-i18n="cta.download">Download Catalog</span>
         </button>
-        <a href="https://www.to-hatsu.co.jp/" target="_blank" class="inline-flex items-center px-5 py-3 rounded-2xl border hover:shadow">🌐 to-hatsu.co.jp</a>
+        <a href="https://www.to-hatsu.co.jp/" target="_blank" class="inline-flex items-center px-5 py-3 rounded-2xl border hover:shadow">
+          🌐 <span class="ml-2" data-i18n="about.website">Website</span>
+        </a>
       </div>
       <div class="mt-6 flex items-center gap-2 text-sm text-slate-500">
         ✅ <span data-i18n="hero.trust">Trusted by precision fabricators worldwide.</span>
@@ -139,8 +145,14 @@
       <div class="rounded-2xl border bg-white p-6">
         <h3 class="font-semibold text-lg" data-i18n="about.links">Links</h3>
         <div class="mt-2 text-slate-600 space-y-2">
-          <a class="underline" href="https://www.to-hatsu.co.jp/" target="_blank" rel="noreferrer">Website</a>
-          <div class="text-sm text-slate-500">WhatsApp: +81 802 140 9299</div>
+          <a class="underline inline-flex items-center gap-2" href="https://www.to-hatsu.co.jp/" target="_blank" rel="noreferrer">
+            🌐 <span data-i18n="about.website">Website</span>
+          </a>
+          <div class="text-sm text-slate-500 inline-flex items-center gap-2">
+            <!-- small WA icon -->
+            <svg aria-hidden="true" viewBox="0 0 32 32" width="14" height="14"><path d="M19.9 17.7c-.3-.1-1.8-.9-2.1-1s-.5-.1-.8.3-.9 1-1.1 1.2-.4.2-.7.1c-.3-.1-1.4-.5-2.7-1.7-1-1-1.7-2.2-1.9-2.5s0-.6.2-.7.3-.4.5-.6.2-.3.3-.5 0-.4 0-.6c0-.1-.8-2-1.1-2.8-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4s-1.1 1.1-1.1 2.6 1.1 3 1.3 3.2c.2.3 2.2 3.3 5.2 4.7 2.9 1.4 2.9.9 3.5.9.5 0 1.8-.7 2-1.3.2-.7.2-1.2.1-1.3 0-.1-.2-.1-.5-.2z" fill="#25D366"></path><path d="M27.2 4.8C24.5 2.1 21 0.7 17.2 0.7 9.6 0.7 3.4 6.8 3.4 14.4c0 2.3.6 4.6 1.8 6.6L3 31.3l10.6-2.8c1.9 1 4 1.6 6.1 1.6h0c7.6 0 13.8-6.1 13.8-13.7 0-3.7-1.4-7.2-4.1-9.9zM19.7 27.2h0c-1.9 0-3.7-.5-5.3-1.4l-.4-.2-6.2 1.6 1.7-6-.3-.4c-1.1-1.8-1.7-3.9-1.7-6 0-6.3 5.1-11.4 11.4-11.4 3 0 5.9 1.2 8 3.3 2.1 2.1 3.3 5 3.3 8 0 6.3-5.1 11.4-11.4 11.4z" fill="#25D366"></path></svg>
+            <span>WhatsApp: +81 802 140 9299</span>
+          </div>
         </div>
       </div>
     </div>
@@ -170,39 +182,43 @@
     <h2 class="text-2xl font-semibold mb-6" data-i18n="series.title">WB Series</h2>
     <div class="grid md:grid-cols-3 gap-6">
       <div class="rounded-2xl border bg-white p-6">
-        <div class="text-sm text-slate-500">STANDARD</div>
+        <div class="text-sm text-slate-500" data-i18n="series.labels.standard">STANDARD</div>
         <div class="font-semibold text-lg mt-1">WB120 / WBP120</div>
         <div class="text-sm mt-1">500 kN/m</div>
-        <div class="text-sm text-slate-600">Die Length 50/100/200/500 mm</div>
-        <div class="text-sm text-slate-600">Material thickness 0.3 – 1.2 mm</div>
+        <div class="text-sm text-slate-600"><span data-i18n="series.labels.dieLength">Die Length</span> 50/100/200/500 mm</div>
+        <div class="text-sm text-slate-600"><span data-i18n="series.labels.materialThickness">Material thickness</span> 0.3 – 1.2 mm</div>
       </div>
+
       <div class="rounded-2xl border bg-white p-6">
-        <div class="text-sm text-slate-500">STANDARD</div>
+        <div class="text-sm text-slate-500" data-i18n="series.labels.standard">STANDARD</div>
         <div class="font-semibold text-lg mt-1">WB230 / WBP230</div>
         <div class="text-sm mt-1">700 kN/m</div>
-        <div class="text-sm text-slate-600">Die Length 50/100/200/500 mm</div>
-        <div class="text-sm text-slate-600">Material thickness 0.3 – 2.3 mm</div>
+        <div class="text-sm text-slate-600"><span data-i18n="series.labels.dieLength">Die Length</span> 50/100/200/500 mm</div>
+        <div class="text-sm text-slate-600"><span data-i18n="series.labels.materialThickness">Material thickness</span> 0.3 – 2.3 mm</div>
       </div>
+
       <div class="rounded-2xl border bg-white p-6">
-        <div class="text-sm text-slate-500">STANDARD</div>
+        <div class="text-sm text-slate-500" data-i18n="series.labels.standard">STANDARD</div>
         <div class="font-semibold text-lg mt-1">WB350 / WBP350</div>
         <div class="text-sm mt-1">1000 kN/m</div>
-        <div class="text-sm text-slate-600">Die Length 50/100/200/500 mm</div>
-        <div class="text-sm text-slate-600">Material thickness 0.5 – 3.2 mm</div>
+        <div class="text-sm text-slate-600"><span data-i18n="series.labels.dieLength">Die Length</span> 50/100/200/500 mm</div>
+        <div class="text-sm text-slate-600"><span data-i18n="series.labels.materialThickness">Material thickness</span> 0.5 – 3.2 mm</div>
       </div>
+
       <div class="rounded-2xl border bg-white p-6">
-        <div class="text-sm text-slate-500">HEAVY</div>
+        <div class="text-sm text-slate-500" data-i18n="series.labels.heavy">HEAVY</div>
         <div class="font-semibold text-lg mt-1">WB650S / WBP650S</div>
         <div class="text-sm mt-1">1500 kN/m</div>
-        <div class="text-sm text-slate-600">Die Length 50/100/200/500 mm</div>
-        <div class="text-sm text-slate-600">Material thickness 1.2 – 6.5 mm</div>
+        <div class="text-sm text-slate-600"><span data-i18n="series.labels.dieLength">Die Length</span> 50/100/200/500 mm</div>
+        <div class="text-sm text-slate-600"><span data-i18n="series.labels.materialThickness">Material thickness</span> 1.2 – 6.5 mm</div>
       </div>
+
       <div class="rounded-2xl border bg-white p-6">
-        <div class="text-sm text-slate-500">HEAVY</div>
+        <div class="text-sm text-slate-500" data-i18n="series.labels.heavy">HEAVY</div>
         <div class="font-semibold text-lg mt-1">WB950 / WBP950</div>
         <div class="text-sm mt-1">2000 kN/m</div>
-        <div class="text-sm text-slate-600">Die Length 100/200 mm</div>
-        <div class="text-sm text-slate-600">Material thickness 6.5 – 9.5 mm</div>
+        <div class="text-sm text-slate-600"><span data-i18n="series.labels.dieLength">Die Length</span> 100/200 mm</div>
+        <div class="text-sm text-slate-600"><span data-i18n="series.labels.materialThickness">Material thickness</span> 6.5 – 9.5 mm</div>
       </div>
     </div>
   </section>
@@ -266,15 +282,20 @@
         <a class="underline" href="https://www.to-hatsu.co.jp/" target="_blank" rel="noreferrer">to-hatsu.co.jp</a>
       </div>
       <div class="flex items-center gap-4">
-        <a href="https://wa.me/818021409299" target="_blank" class="hover:opacity-80">WhatsApp</a>
+        <a href="https://wa.me/818021409299" target="_blank" class="hover:opacity-80 inline-flex items-center gap-2">
+          <svg aria-hidden="true" viewBox="0 0 32 32" width="14" height="14"><path d="M19.9 17.7c-.3-.1-1.8-.9-2.1-1s-.5-.1-.8.3-.9 1-1.1 1.2-.4.2-.7.1c-.3-.1-1.4-.5-2.7-1.7-1-1-1.7-2.2-1.9-2.5s0-.6.2-.7.3-.4.5-.6.2-.3.3-.5 0-.4 0-.6c0-.1-.8-2-1.1-2.8-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4s-1.1 1.1-1.1 2.6 1.1 3 1.3 3.2c.2.3 2.2 3.3 5.2 4.7 2.9 1.4 2.9.9 3.5.9.5 0 1.8-.7 2-1.3.2-.7.2-1.2.1-1.3 0-.1-.2-.1-.5-.2z" fill="#25D366"></path><path d="M27.2 4.8C24.5 2.1 21 0.7 17.2 0.7 9.6 0.7 3.4 6.8 3.4 14.4c0 2.3.6 4.6 1.8 6.6L3 31.3l10.6-2.8c1.9 1 4 1.6 6.1 1.6h0c7.6 0 13.8-6.1 13.8-13.7 0-3.7-1.4-7.2-4.1-9.9zM19.7 27.2h0c-1.9 0-3.7-.5-5.3-1.4l-.4-.2-6.2 1.6 1.7-6-.3-.4c-1.1-1.8-1.7-3.9-1.7-6 0-6.3 5.1-11.4 11.4-11.4 3 0 5.9 1.2 8 3.3 2.1 2.1 3.3 5 3.3 8 0 6.3-5.1 11.4-11.4 11.4z" fill="#25D366"></path></svg>
+          <span data-i18n="common.whatsapp">WhatsApp</span>
+        </a>
         <span>Design by Wahyu</span>
       </div>
     </div>
   </footer>
 
   <!-- Floating WhatsApp -->
-  <a href="https://wa.me/818021409299" target="_blank" class="btn-wa inline-flex items-center gap-2 rounded-full bg-green-500 text-white px-4 py-2 shadow-lg">
-    <span>💬</span><span>WhatsApp</span>
+  <a href="https://wa.me/818021409299" target="_blank"
+     class="btn-wa inline-flex items-center gap-2 rounded-full bg-green-500 text-white px-4 py-2 shadow-lg">
+    <svg aria-hidden="true" viewBox="0 0 32 32" width="16" height="16"><path d="M19.9 17.7c-.3-.1-1.8-.9-2.1-1s-.5-.1-.8.3-.9 1-1.1 1.2-.4.2-.7.1c-.3-.1-1.4-.5-2.7-1.7-1-1-1.7-2.2-1.9-2.5s0-.6.2-.7.3-.4.5-.6.2-.3.3-.5 0-.4 0-.6c0-.1-.8-2-1.1-2.8-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4s-1.1 1.1-1.1 2.6 1.1 3 1.3 3.2c.2.3 2.2 3.3 5.2 4.7 2.9 1.4 2.9.9 3.5.9.5 0 1.8-.7 2-1.3.2-.7.2-1.2.1-1.3 0-.1-.2-.1-.5-.2z" fill="#fff"></path><path d="M27.2 4.8C24.5 2.1 21 0.7 17.2 0.7 9.6 0.7 3.4 6.8 3.4 14.4c0 2.3.6 4.6 1.8 6.6L3 31.3l10.6-2.8c1.9 1 4 1.6 6.1 1.6h0c7.6 0 13.8-6.1 13.8-13.7 0-3.7-1.4-7.2-4.1-9.9zM19.7 27.2h0c-1.9 0-3.7-.5-5.3-1.4l-.4-.2-6.2 1.6 1.7-6-.3-.4c-1.1-1.8-1.7-3.9-1.7-6 0-6.3 5.1-11.4 11.4-11.4 3 0 5.9 1.2 8 3.3 2.1 2.1 3.3 5 3.3 8 0 6.3-5.1 11.4-11.4 11.4z" fill="#fff"></path></svg>
+    <span>WhatsApp</span>
   </a>
 
   <!-- ===== Modal (Form) ===== -->
@@ -292,7 +313,7 @@
       <form id="leadForm" class="grid grid-cols-1 md:grid-cols-2 gap-4" method="POST" target="hidden_iframe">
         <div><label class="text-sm" data-i18n="form.name">Full name</label><input class="w-full border rounded-xl px-3 py-2" required id="f_name" /></div>
         <div><label class="text-sm" data-i18n="form.company">Company</label><input class="w-full border rounded-xl px-3 py-2" required id="f_company" /></div>
-        <div><label class="text-sm">Email</label><input class="w-full border rounded-xl px-3 py-2" type="email" required id="f_email" /></div>
+        <div><label class="text-sm" data-i18n="form.email">Email</label><input class="w-full border rounded-xl px-3 py-2" type="email" required id="f_email" /></div>
         <div><label class="text-sm" data-i18n="form.phone">Phone</label><input class="w-full border rounded-xl px-3 py-2" id="f_phone" /></div>
         <div><label class="text-sm" data-i18n="form.country">Country/Region</label><input class="w-full border rounded-xl px-3 py-2" required id="f_country" /></div>
         <div><label class="text-sm" data-i18n="form.language">Preferred language</label>
@@ -302,15 +323,15 @@
           <textarea class="w-full border rounded-xl px-3 py-2" rows="3" id="f_purpose"></textarea>
         </div>
         <div>
-          <label class="text-sm">FAQ Topic (optional)</label>
+          <label class="text-sm" data-i18n="form.faqLabel">FAQ Topic (optional)</label>
           <select class="w-full border rounded-xl px-3 py-2" id="f_topic">
             <option value="">—</option>
-            <option value="pricing">Pricing / Quotation</option>
-            <option value="compatibility">Compatibility & Press</option>
-            <option value="material">Material / Thickness</option>
-            <option value="custom">Custom size / Special</option>
-            <option value="delivery">Delivery / Lead time</option>
-            <option value="other">Other</option>
+            <option value="pricing" data-i18n="form.faqOptions.pricing">Pricing / Quotation</option>
+            <option value="compatibility" data-i18n="form.faqOptions.compatibility">Compatibility & Press</option>
+            <option value="material" data-i18n="form.faqOptions.material">Material / Thickness</option>
+            <option value="custom" data-i18n="form.faqOptions.custom">Custom size / Special</option>
+            <option value="delivery" data-i18n="form.faqOptions.delivery">Delivery / Lead time</option>
+            <option value="other" data-i18n="form.faqOptions.other">Other</option>
           </select>
         </div>
         <div><label class="text-sm" data-i18n="form.question">Inquiry (optional)</label><input class="w-full border rounded-xl px-3 py-2" id="f_inquiry" /></div>
@@ -353,7 +374,8 @@
     const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
     const translations = {
       en: {
-        nav: { about:"About", features:"Key Features", how:"How to Order", download:"Download", series:"WB Series", video:"Video" },
+        common: { whatsapp:"WhatsApp" },
+        nav: { about:"About", features:"Key Features", series:"WB Series", video:"Video", how:"How to Order", download:"Download" },
         cta: { download:"Download Catalog", how:"How to Order" },
         hero: {
           title:"Redefining Mark-Free Forming with WingBend",
@@ -366,7 +388,8 @@
           title:"What is WingBend?",
           copy:"WingBend and WingBend Plus are V-die systems that minimize surface marks while enabling short flanges, consistent angles, and excellent repeatability.",
           company:"Company",
-          links:"Links"
+          links:"Links",
+          website:"Website"
         },
         features: {
           title:"Key Features",
@@ -376,7 +399,10 @@
             { title:"Flexible applications", body:"Ideal for diagonal/tapered bends and chequer plates with consistent quality." }
           ]
         },
-        series: { title: "WB Series" },
+        series: {
+          title: "WB Series",
+          labels: { standard:"STANDARD", heavy:"HEAVY", dieLength:"Die Length", materialThickness:"Material thickness" }
+        },
         video: {
           title: "WingBend Video / Simulation",
           note: "Upload file videos/wingbend.mp4 or set YOUTUBE_ID above."
@@ -394,8 +420,9 @@
         form:{
           title:"Before downloading — tell us about you",
           subtitle:"We’ll send you the latest catalog and product tips.",
-          name:"Full name", company:"Company", phone:"Phone", country:"Country/Region", language:"Preferred language",
-          purpose:"Project details or interest (optional)", question:"Inquiry (optional)",
+          name:"Full name", company:"Company", email:"Email", phone:"Phone", country:"Country/Region", language:"Preferred language",
+          purpose:"Project details or interest (optional)", question:"Inquiry (optional)", faqLabel:"FAQ Topic (optional)",
+          faqOptions:{ pricing:"Pricing / Quotation", compatibility:"Compatibility & Press", material:"Material / Thickness", custom:"Custom size / Special", delivery:"Delivery / Lead time", other:"Other" },
           consent:"I agree to receive product updates and communications related to WingBend (you can unsubscribe at any time).",
           submit:"Get Catalog", cancel:"Cancel",
           success:"Thanks! Your download will start. If not, use the link below."
@@ -403,7 +430,8 @@
       },
 
       ja: {
-        nav: { about:"概要", features:"特長", how:"注文方法", download:"カタログ", series:"WBシリーズ", video:"動画" },
+        common: { whatsapp:"WhatsApp" },
+        nav: { about:"概要", features:"特長", series:"WBシリーズ", video:"動画", how:"注文方法", download:"カタログ" },
         cta: { download:"カタログをダウンロード", how:"注文方法" },
         hero: {
           title:"WingBendで“キズなし曲げ”をスタンダードに",
@@ -416,7 +444,8 @@
           title:"WingBendとは",
           copy:"WingBend／WingBend Plus は、短いフランジ・正確な角度・高い再現性を保ちながら、目視面のキズを抑えるVダイシステムです。",
           company:"会社情報",
-          links:"リンク"
+          links:"リンク",
+          website:"Webサイト"
         },
         features: {
           title:"主な特長",
@@ -426,7 +455,10 @@
             { title:"幅広い適用", body:"斜め・テーパー・縞板など難素材でも均一な品質を実現。" }
           ]
         },
-        series: { title: "WBシリーズ" },
+        series: {
+          title: "WBシリーズ",
+          labels: { standard:"STANDARD", heavy:"HEAVY", dieLength:"ダイ長さ", materialThickness:"板厚" }
+        },
         video: {
           title: "WingBend 動画／シミュレーション",
           note: "videos/wingbend.mp4 を配置するか、上部の YOUTUBE_ID を設定してください。"
@@ -444,8 +476,9 @@
         form:{
           title:"ダウンロードの前に — ご連絡先",
           subtitle:"最新版カタログと活用ヒントをお送りします。",
-          name:"氏名", company:"会社名", phone:"電話番号", country:"国／地域", language:"希望言語",
-          purpose:"案件内容・ご関心（任意）", question:"お問い合わせ内容（任意）",
+          name:"氏名", company:"会社名", email:"メール", phone:"電話番号", country:"国／地域", language:"希望言語",
+          purpose:"案件内容・ご関心（任意）", question:"お問い合わせ内容（任意）", faqLabel:"FAQトピック（任意）",
+          faqOptions:{ pricing:"価格・御見積", compatibility:"互換性・プレス", material:"材質・板厚", custom:"特注サイズ・特型", delivery:"納期", other:"その他" },
           consent:"WingBend に関するお知らせの受信に同意します（いつでも配信停止可）。",
           submit:"カタログを取得", cancel:"キャンセル",
           success:"ありがとうございます。ダウンロードが開始します。開始しない場合は下のリンクをクリックしてください。"
@@ -501,7 +534,7 @@
     fillHidden();
 
     // Map to Google Form
-    function mapField(el, entry){ if (el && entry) el.setAttribute("name", entry); } // hanya set kalau ada ID
+    function mapField(el, entry){ if (el && entry) el.setAttribute("name", entry); }
     function mountForm(){
       leadForm.setAttribute("action", GOOGLE_FORM_ACTION);
       mapField($("#f_name"),FIELD_MAP.name);
@@ -515,7 +548,6 @@
       mapField($("#f_inquiry"),FIELD_MAP.inquiry);
 
       $("#f_agree").setAttribute("name", FIELD_MAP.agree);
-      // kirim nilai teks yang sama dengan opsi di Google Form
       $("#f_agree").addEventListener("change",(e)=>{ e.target.value = e.target.checked ? CONSENT_VALUE : ""; });
 
       // hidden context
