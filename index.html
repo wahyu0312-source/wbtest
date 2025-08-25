@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>WingBend — Mark-Free Forming (JA/EN)</title>
-  <meta name="description" content="WingBend / WingBend Plus — V-die system for mark-free forming. Short flanges, near-hole bending, tapered edges. Catalog download with lead capture." />
+  <title>WingBend — Mark-Free Forming (JA/EN/ID)</title>
+  <meta name="description" content="WingBend / WingBend Plus — V-die system for mark-free forming. Short flanges, near-hole bending, tapered edges. Catalog download with lead capture. (JA/EN/ID)" />
   <link rel="icon" href="images/tsh.png" />
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Open Graph -->
   <meta property="og:title" content="WingBend — Mark-Free Forming" />
-  <meta property="og:description" content="Beautiful outer radii and short flanges with minimal marking. Download the catalog (JA/EN)." />
+  <meta property="og:description" content="Beautiful outer radii and short flanges with minimal marking. Download the catalog (JA/EN/ID)." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://example.com/wingbend" />
   <meta property="og:image" content="images/AB_WingbendMA_EN.png" />
@@ -44,8 +44,8 @@
     const SERIES_IMAGES = {
       wb120:  ["images/wbp120.jpg","images/wbp120a.jpg"],
       wb230:  ["images/wbp230.jpg","images/wbp230a.jpg","images/wbp230c.jpg"],
-      wb350:  ["images/wbp350a.jpg","images/wbp350 (1).jpg"],   // jika nama file mengandung spasi, biarkan apa adanya
-      wb650s: ["images/wbp650s.jpg"],                            // ganti ke nama file (misal wbp650s.jpg)
+      wb350:  ["images/wbp350a.jpg","images/wbp350 (1).jpg"],
+      wb650s: ["images/wbp650s.jpg"],
       wb950:  ["images/wbp950.jpg"]
     };
   </script>
@@ -80,6 +80,7 @@
           <option value="auto">🌐 Auto</option>
           <option value="en">🇬🇧 English</option>
           <option value="ja">🇯🇵 日本語</option>
+          <option value="id">🇮🇩 Bahasa Indonesia</option>
         </select>
         <button id="openModal" class="rounded-2xl bg-slate-900 text-white px-4 py-2 text-sm">
           <span data-i18n="cta.download">Download Catalog</span>
@@ -112,11 +113,10 @@
 
     <div class="relative">
       <div class="aspect-[4/3] rounded-3xl bg-white border shadow-inner grid place-items-center overflow-hidden">
-        <!-- Gambar konsep (edit di CONFIG) -->
         <img id="heroConcept" src="" alt="WingBend / WingBend Plus tool concept" class="w-full h-full object-contain" />
       </div>
       <div class="absolute -bottom-4 -right-4 bg-white border rounded-2xl shadow p-3 text-xs">
-        <div class="font-medium">EN / JA</div>
+        <div class="font-medium">EN / JA / ID</div>
         <div class="text-slate-500" data-i18n="badges.markFree">Mark-free bending</div>
       </div>
     </div>
@@ -181,7 +181,6 @@
     <h2 class="text-2xl font-semibold mb-6" data-i18n="series.title">WB Series</h2>
 
     <div class="grid md:grid-cols-3 gap-6">
-      <!-- WB120 -->
       <button data-series="wb120" class="text-left rounded-2xl border bg-white p-6 hover:shadow transition">
         <div class="text-sm text-slate-500" data-i18n="series.labels.standard">STANDARD</div>
         <div class="font-semibold text-lg mt-1">WB120 / WBP120</div>
@@ -191,7 +190,6 @@
         <div class="mt-3 text-sky-700 underline">Open gallery</div>
       </button>
 
-      <!-- WB230 -->
       <button data-series="wb230" class="text-left rounded-2xl border bg-white p-6 hover:shadow transition">
         <div class="text-sm text-slate-500" data-i18n="series.labels.standard">STANDARD</div>
         <div class="font-semibold text-lg mt-1">WB230 / WBP230</div>
@@ -201,7 +199,6 @@
         <div class="mt-3 text-sky-700 underline">Open gallery</div>
       </button>
 
-      <!-- WB350 -->
       <button data-series="wb350" class="text-left rounded-2xl border bg-white p-6 hover:shadow transition">
         <div class="text-sm text-slate-500" data-i18n="series.labels.standard">STANDARD</div>
         <div class="font-semibold text-lg mt-1">WB350 / WBP350</div>
@@ -211,7 +208,6 @@
         <div class="mt-3 text-sky-700 underline">Open gallery</div>
       </button>
 
-      <!-- WB650S -->
       <button data-series="wb650s" class="text-left rounded-2xl border bg-white p-6 hover:shadow transition">
         <div class="text-sm text-slate-500" data-i18n="series.labels.heavy">HEAVY</div>
         <div class="font-semibold text-lg mt-1">WB650S / WBP650S</div>
@@ -221,7 +217,6 @@
         <div class="mt-3 text-sky-700 underline">Open gallery</div>
       </button>
 
-      <!-- WB950 -->
       <button data-series="wb950" class="text-left rounded-2xl border bg-white p-6 hover:shadow transition">
         <div class="text-sm text-slate-500" data-i18n="series.labels.heavy">HEAVY</div>
         <div class="font-semibold text-lg mt-1">WB950 / WBP950</div>
@@ -237,13 +232,11 @@
   <section id="video" class="max-w-6xl mx-auto px-4 py-10">
     <h2 class="text-2xl font-semibold mb-4" data-i18n="video.title">WingBend Video / Simulation</h2>
     <div class="grid md:grid-cols-2 gap-6 items-start">
-      <!-- video lokal -->
       <video id="localVideo" controls class="w-full rounded-2xl border bg-black" poster="images/AB_WingbendMA_EN.png">
         <source id="localVideoSrc" src="" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
-      <!-- YouTube (opsional) -->
       <div id="ytWrap" class="w-full aspect-video rounded-2xl border overflow-hidden hidden">
         <iframe id="ytIframe" width="560" height="315" src="" title="WingBend Video"
           frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -327,6 +320,7 @@
           <select class="w-full border rounded-xl px-3 py-2" id="f_language">
             <option value="English">English</option>
             <option value="日本語">日本語</option>
+            <option value="Bahasa Indonesia">Bahasa Indonesia</option>
           </select>
         </div>
         <div class="md:col-span-2"><label class="text-sm" data-i18n="form.purpose">Project details or interest (optional)</label>
@@ -406,7 +400,7 @@
     const translations = {
       en:{common:{whatsapp:"WhatsApp"},nav:{about:"About",features:"Key Features",series:"WB Series",video:"Video",how:"How to Order",download:"Download"},
         cta:{download:"Download Catalog",how:"How to Order"},
-        hero:{title:"Redefining Mark-Free Forming with WingBend",subtitle:"Achieve beautiful outer radii and short flanges with minimal marking — even near holes, tapered edges, and patterned plates.",trust:"Trusted by precision fabricators worldwide.",imageCaption:"WingBend / WingBend Plus tool concept"},
+        hero:{title:"Redefining Mark-Free Forming with WingBend",subtitle:"Achieve beautiful outer radius and short flanges with minimal marking — even near holes, tapered edges, and patterned plates.",trust:"Trusted by precision fabricators worldwide.",imageCaption:"WingBend / WingBend Plus tool concept"},
         badges:{markFree:"Mark-free bending"},
         about:{title:"What is WingBend?",copy:"WingBend and WingBend Plus are V-die systems that minimize surface marks while enabling short flanges, consistent angles, and excellent repeatability.",company:"Company",links:"Links",website:"Website",companyName:"Tokyo Seimitsu Hatsujo Co., Ltd.",location:"Yokohama, Japan"},
         features:{title:"Key Features",items:[{title:"Minimal marking",body:"Mark-free finish on visible surfaces — no rework."},{title:"Near-feature bending",body:"Bend close to holes and edges with stable flanges and exact angles."},{title:"Flexible applications",body:"Ideal for diagonal/tapered bends and chequer plates with consistent quality."}]},
@@ -424,6 +418,19 @@
         about:{title:"WingBendとは",copy:"WingBend／WingBend Plus は、短いフランジ・正確な角度・高い再現性を保ちながら、目視面のキズを抑えるVダイシステムです。",company:"会社情報",links:"リンク",website:"Webサイト",companyName:"東京精密発条株式会社",location:"日本・横浜"},
         features:{title:"主な特長",items:[{title:"目視面のキズを抑制",body:"外観部品でも後処理を最小化できます。"},{title:"穴・縁に近い曲げ",body:"穴や端部の近傍でも安定したフランジと角度を確保。"},{title:"幅広い適用",body:"斜め・テーパー・縞板など難素材でも均一な品質を実現。"}]},
         series:{title:"WBシリーズ",labels:{standard:"STANDARD",heavy:"HEAVY",dieLength:"ダイ長さ",materialThickness:"板厚"}},
+      },
+      id:{common:{whatsapp:"WhatsApp"},nav:{about:"Tentang",features:"Keunggulan",series:"Seri WB",video:"Video",how:"Cara Pemesanan",download:"Unduh"},
+        cta:{download:"Unduh Katalog",how:"Cara Pemesanan"},
+        hero:{title:"Bending Tanpa Bekas dengan WingBend",subtitle:"Dapatkan radius luar yang bersih dan flange pendek dengan bekas minimal — bahkan dekat lubang, tepi miring, dan plat bermotif.",trust:"Dipercaya oleh perusahaan manufaktur di berbagai negara.",imageCaption:"Konsep alat WingBend / WingBend Plus"},
+        badges:{markFree:"Bending tanpa bekas"},
+        about:{title:"Apa itu WingBend?",copy:"WingBend dan WingBend Plus adalah sistem dies tekuk yang meminimalkan bekas permukaan sekaligus memungkinkan flange pendek, sudut konsisten, dan repeatability tinggi.",company:"Perusahaan",links:"Tautan",website:"Website",companyName:"Tokyo Seimitsu Hatsujo Co., Ltd.",location:"Yokohama, Jepang"},
+        features:{title:"Keunggulan Utama",items:[{title:"Bekas minimal",body:"Hasil akhir rapi pada permukaan yang terlihat — tanpa rework."},{title:"Bending dekat fitur",body:"Bisa menekuk dekat lubang/tepi dengan flange stabil dan sudut akurat."},{title:"Aplikasi fleksibel",body:"Ideal untuk tekukan diagonal/bertaper dan chequer plate dengan kualitas konsisten."}]},
+        series:{title:"Seri WB",labels:{standard:"STANDAR",heavy:"HEAVY",dieLength:"Panjang Die",materialThickness:"Ketebalan material"}},
+        video:{title:"Video / Simulasi WingBend"},
+        how:{title:"Cara Pemesanan",steps:["Kirim spesifikasi material (jenis, tebal, lebar, jumlah/batch).","Kami rekomendasikan model WingBend dan slider yang optimal.","Konfirmasi quotation & pengiriman, lalu lakukan PO."]},
+        download:{title:"Unduh Katalog WingBend",copy:"Isi data Anda untuk menerima PDF secara instan."},
+        privacy:{note:"Data Anda digunakan untuk memenuhi permintaan dan pembaruan produk terkait. Anda bisa berhenti kapan saja."},
+        form:{title:"Sebelum mengunduh — beri tahu kami tentang Anda",subtitle:"Kami kirim katalog terbaru dan tips produk.",name:"Nama lengkap",company:"Perusahaan",email:"Email",phone:"Telepon",country:"Negara/Wilayah",language:"Bahasa pilihan",purpose:"Detail proyek atau ketertarikan (opsional)",question:"Pertanyaan (opsional)",faqLabel:"Topik FAQ (opsional)",faqOptions:{pricing:"Harga / Quotation",compatibility:"Kesesuaian & Press",material:"Material / Ketebalan",custom:"Ukuran khusus / Spesial",delivery:"Pengiriman / Lead time",other:"Lainnya"},consent:"Saya setuju menerima pembaruan produk dan komunikasi terkait WingBend (dapat berhenti kapan saja).",submit:"Dapatkan Katalog",cancel:"Batal",success:"Terima kasih! Unduhan akan dimulai. Jika tidak, gunakan tautan di bawah."}
       }
     };
 
@@ -431,7 +438,13 @@
           langSelect=$("#langSelect"), leadForm=$("#leadForm"), successNote=$("#successNote"),
           fallbackLink=$("#fallbackLink");
 
-    function resolveLang(pref){ if(pref!=="auto") return pref; const n=navigator.language||(navigator.languages&&navigator.languages[0])||"en"; return n.toLowerCase().startsWith("ja")?"ja":"en"; }
+    function resolveLang(pref){
+      if(pref!=="auto") return pref;
+      const n=(navigator.language||(navigator.languages&&navigator.languages[0])||"en").toLowerCase();
+      if(n.startsWith("ja")) return "ja";
+      if(n.startsWith("id") || n.startsWith("in")) return "id";
+      return "en";
+    }
     function applyI18n(lang){
       const t=translations[lang]||translations.en;
       $$("[data-i18n]").forEach(el=>{
@@ -439,7 +452,9 @@
         let cur=t; for(const k of keys) cur=cur?.[k];
         if(typeof cur==="string") el.textContent=cur;
       });
-      if ($("#f_language")) $("#f_language").value = (lang==='ja') ? '日本語' : 'English';
+      if ($("#f_language")) {
+        $("#f_language").value = (lang==='ja') ? '日本語' : (lang==='id' ? 'Bahasa Indonesia' : 'English');
+      }
     }
 
     function openModal(){ modal.classList.remove("hidden"); document.documentElement.classList.add("modal-open"); }
@@ -464,9 +479,7 @@
       return input;
     }
     (function mountMedia(){
-      // local video
       if(LOCAL_VIDEO){ $("#localVideoSrc").src = LOCAL_VIDEO; $("#localVideo").load(); }
-      // youtube
       const id = normalizeYouTubeId(YOUTUBE_INPUT);
       if(id){ $("#ytIframe").src=`https://www.youtube.com/embed/${id}`; $("#ytWrap").classList.remove("hidden"); }
     })();
@@ -512,10 +525,8 @@
       };
       await sendToSheet(data);
       successNote.classList.remove("hidden");
-      // auto download
       const a=document.createElement("a");
-      a.href=encodeURI(CATALOG_URL);
-      a.download="";
+      a.href=encodeURI(CATALOG_URL); a.download="";
       document.body.appendChild(a); a.click(); a.remove();
     });
 
@@ -546,7 +557,6 @@
     gallery.addEventListener("click",(e)=>{ if(e.target.classList.contains("lightbox-backdrop")) closeGalleryFn(); });
     document.addEventListener("keydown",(e)=>{ if(gallery.classList.contains("hidden")) return; if(e.key==="Escape") closeGalleryFn(); if(e.key==="ArrowLeft") $("#prevImg").click(); if(e.key==="ArrowRight") $("#nextImg").click(); });
 
-    // Bind cards
     $$("#series [data-series]").forEach(btn=>{
       btn.addEventListener("click",()=>{
         const key = btn.getAttribute("data-series");
@@ -557,5 +567,3 @@
   </script>
 </body>
 </html>
-
-
