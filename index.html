@@ -15,25 +15,42 @@
   <meta property="og:url" content="https://example.com/wingbend" />
   <meta property="og:image" content="images/AB_WingbendMA_EN.png" />
 
-  <style>.modal-open{overflow:hidden}.btn-wa{position:fixed;right:16px;bottom:16px}</style>
+  <style>
+    .modal-open{overflow:hidden}
+    .btn-wa{position:fixed;right:16px;bottom:16px}
+    .lightbox-backdrop{background:rgba(0,0,0,.7)}
+  </style>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-800">
-  <!-- ===== CONFIG ===== -->
+  <!-- ============ CONFIG (EDIT DI SINI) ============ -->
   <script>
     // PDF katalog (letakkan file di /downloads)
     const CATALOG_URL = "downloads/e catalog.pdf";
 
-    // ==== URL Web App Apps Script(exec) ====
+    // Apps Script Web App (Deploy → Web App → 'Anyone' → copy URL /exec)
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxaa6UY8SwusVafX8w59JqzBVXHhJRxHCc9VF-2ASEij7ml9CKBwrVxOSee2lUNUuwA/exec";
 
-    // YouTube opsional (bisa ID atau URL). Kosongkan jika tidak dipakai.
-    const YOUTUBE_INPUT = "https://www.youtube.com/watch?v=Jg86i4Kg_QQ"; // contoh URL/ID: "https://www.youtube.com/watch?v=Jg86i4Kg_QQ"
+    // Video: kosongkan kalau tidak mau pakai salah satu
+    const LOCAL_VIDEO = "videos/wbp.mp4"; // file lokal di repo
+    const YOUTUBE_INPUT = "https://www.youtube.com/watch?v=Jg86i4Kg_QQ"; // boleh ID atau URL
 
-    // === Nilai checkbox (harus sama dengan label opsi di Form / atau mau simpan ke Sheet) ===
+    // Gambar concept untuk hero
+    const HERO_CONCEPT_IMAGE = "images/AB_WingbendMA_EN.png";
+
+    // Nilai checkbox consent (samakan dg label di Google Form/Sheet kamu)
     const CONSENT_VALUE = "Option 1";
+
+    // === Gambar untuk tiap seri (letakkan di /images sesuai nama di bawah) ===
+    const SERIES_IMAGES = {
+      wb120:  ["images/wbp120.jpg","images/wbp120a.jpg"],
+      wb230:  ["images/wbp230.jpg","images/wbp230a.jpg","images/wbp230c.jpg"],
+      wb350:  ["images/wbp350a.jpg","images/wbp350 (1).jpg"],   // jika nama file mengandung spasi, biarkan apa adanya
+      wb650s: ["images/wbp650s.jpg"],                            // ganti ke nama file kamu (misal wbp650s.jpg)
+      wb950:  ["images/wbp950.jpg"]
+    };
   </script>
 
-  <!-- ===== Header ===== -->
+  <!-- ============ Header ============ -->
   <header class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <a href="https://www.to-hatsu.co.jp/" target="_blank" rel="noreferrer" class="flex items-center gap-3">
@@ -71,7 +88,7 @@
     </div>
   </header>
 
-  <!-- ===== Hero ===== -->
+  <!-- ============ Hero ============ -->
   <section class="max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-10 items-center">
     <div>
       <h1 class="text-4xl md:text-5xl font-bold tracking-tight leading-tight" data-i18n="hero.title">
@@ -92,12 +109,11 @@
         ✅ <span data-i18n="hero.trust">Trusted by precision fabricators worldwide.</span>
       </div>
     </div>
+
     <div class="relative">
-      <div class="aspect-[4/3] rounded-3xl bg-gradient-to-br from-slate-200 to-slate-100 shadow-inner grid place-items-center">
-        <div class="text-center p-8">
-          <div class="text-6xl">🛠️</div>
-          <p class="mt-3 text-slate-600" data-i18n="hero.imageCaption">WingBend / WingBend Plus tool concept</p>
-        </div>
+      <div class="aspect-[4/3] rounded-3xl bg-white border shadow-inner grid place-items-center overflow-hidden">
+        <!-- Gambar konsep (edit di CONFIG) -->
+        <img id="heroConcept" src="" alt="WingBend / WingBend Plus tool concept" class="w-full h-full object-contain" />
       </div>
       <div class="absolute -bottom-4 -right-4 bg-white border rounded-2xl shadow p-3 text-xs">
         <div class="font-medium">EN / JA</div>
@@ -106,7 +122,7 @@
     </div>
   </section>
 
-  <!-- ===== About ===== -->
+  <!-- ============ About ============ -->
   <section id="about" class="max-w-6xl mx-auto px-4 py-10">
     <div class="grid md:grid-cols-3 gap-6">
       <div class="rounded-2xl border bg-white p-6">
@@ -141,7 +157,7 @@
     </div>
   </section>
 
-  <!-- ===== Features ===== -->
+  <!-- ============ Features ============ -->
   <section id="features" class="max-w-6xl mx-auto px-4 py-10">
     <h2 class="text-2xl font-semibold mb-6" data-i18n="features.title">Key Features</h2>
     <div class="grid md:grid-cols-3 gap-6">
@@ -160,71 +176,83 @@
     </div>
   </section>
 
-  <!-- ===== Series ===== -->
+  <!-- ============ Series (klik → gallery) ============ -->
   <section id="series" class="max-w-6xl mx-auto px-4 py-10">
     <h2 class="text-2xl font-semibold mb-6" data-i18n="series.title">WB Series</h2>
+
     <div class="grid md:grid-cols-3 gap-6">
-      <div class="rounded-2xl border bg-white p-6">
+      <!-- WB120 -->
+      <button data-series="wb120" class="text-left rounded-2xl border bg-white p-6 hover:shadow transition">
         <div class="text-sm text-slate-500" data-i18n="series.labels.standard">STANDARD</div>
         <div class="font-semibold text-lg mt-1">WB120 / WBP120</div>
         <div class="text-sm mt-1">500 kN/m</div>
         <div class="text-sm text-slate-600"><span data-i18n="series.labels.dieLength">Die Length</span> 50/100/200/500 mm</div>
         <div class="text-sm text-slate-600"><span data-i18n="series.labels.materialThickness">Material thickness</span> 0.3 – 1.2 mm</div>
-      </div>
+        <div class="mt-3 text-sky-700 underline">Open gallery</div>
+      </button>
 
-      <div class="rounded-2xl border bg-white p-6">
+      <!-- WB230 -->
+      <button data-series="wb230" class="text-left rounded-2xl border bg-white p-6 hover:shadow transition">
         <div class="text-sm text-slate-500" data-i18n="series.labels.standard">STANDARD</div>
         <div class="font-semibold text-lg mt-1">WB230 / WBP230</div>
         <div class="text-sm mt-1">700 kN/m</div>
         <div class="text-sm text-slate-600"><span data-i18n="series.labels.dieLength">Die Length</span> 50/100/200/500 mm</div>
         <div class="text-sm text-slate-600"><span data-i18n="series.labels.materialThickness">Material thickness</span> 0.3 – 2.3 mm</div>
-      </div>
+        <div class="mt-3 text-sky-700 underline">Open gallery</div>
+      </button>
 
-      <div class="rounded-2xl border bg-white p-6">
+      <!-- WB350 -->
+      <button data-series="wb350" class="text-left rounded-2xl border bg-white p-6 hover:shadow transition">
         <div class="text-sm text-slate-500" data-i18n="series.labels.standard">STANDARD</div>
         <div class="font-semibold text-lg mt-1">WB350 / WBP350</div>
         <div class="text-sm mt-1">1000 kN/m</div>
         <div class="text-sm text-slate-600"><span data-i18n="series.labels.dieLength">Die Length</span> 50/100/200/500 mm</div>
         <div class="text-sm text-slate-600"><span data-i18n="series.labels.materialThickness">Material thickness</span> 0.5 – 3.2 mm</div>
-      </div>
+        <div class="mt-3 text-sky-700 underline">Open gallery</div>
+      </button>
 
-      <div class="rounded-2xl border bg-white p-6">
+      <!-- WB650S -->
+      <button data-series="wb650s" class="text-left rounded-2xl border bg-white p-6 hover:shadow transition">
         <div class="text-sm text-slate-500" data-i18n="series.labels.heavy">HEAVY</div>
         <div class="font-semibold text-lg mt-1">WB650S / WBP650S</div>
         <div class="text-sm mt-1">1500 kN/m</div>
         <div class="text-sm text-slate-600"><span data-i18n="series.labels.dieLength">Die Length</span> 50/100/200/500 mm</div>
         <div class="text-sm text-slate-600"><span data-i18n="series.labels.materialThickness">Material thickness</span> 1.2 – 6.5 mm</div>
-      </div>
+        <div class="mt-3 text-sky-700 underline">Open gallery</div>
+      </button>
 
-      <div class="rounded-2xl border bg-white p-6">
+      <!-- WB950 -->
+      <button data-series="wb950" class="text-left rounded-2xl border bg-white p-6 hover:shadow transition">
         <div class="text-sm text-slate-500" data-i18n="series.labels.heavy">HEAVY</div>
         <div class="font-semibold text-lg mt-1">WB950 / WBP950</div>
         <div class="text-sm mt-1">2000 kN/m</div>
         <div class="text-sm text-slate-600"><span data-i18n="series.labels.dieLength">Die Length</span> 100/200 mm</div>
         <div class="text-sm text-slate-600"><span data-i18n="series.labels.materialThickness">Material thickness</span> 6.5 – 9.5 mm</div>
-      </div>
+        <div class="mt-3 text-sky-700 underline">Open gallery</div>
+      </button>
     </div>
   </section>
 
-  <!-- ===== VIDEO ===== -->
+  <!-- ============ VIDEO ============ -->
   <section id="video" class="max-w-6xl mx-auto px-4 py-10">
     <h2 class="text-2xl font-semibold mb-4" data-i18n="video.title">WingBend Video / Simulation</h2>
     <div class="grid md:grid-cols-2 gap-6 items-start">
       <!-- video lokal -->
-      <video controls class="w-full rounded-2xl border bg-black" poster="images/AB_WingbendMA_EN.png">
-        <source src="videos/wbp.mp4" type="video/mp4" />
+      <video id="localVideo" controls class="w-full rounded-2xl border bg-black" poster="images/AB_WingbendMA_EN.png">
+        <source id="localVideoSrc" src="" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
       <!-- YouTube (opsional) -->
       <div id="ytWrap" class="w-full aspect-video rounded-2xl border overflow-hidden hidden">
-        <iframe id="ytIframe" width="560" height="315" src="" title="WingBend Video" frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe id="ytIframe" width="560" height="315" src="" title="WingBend Video"
+          frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
       </div>
     </div>
   </section>
 
-  <!-- ===== How to Order ===== -->
+  <!-- ============ How to Order ============ -->
   <section id="how" class="max-w-6xl mx-auto px-4 py-10">
     <h2 class="text-2xl font-semibold mb-6" data-i18n="how.title">How to Order</h2>
     <ol class="grid gap-4 md:grid-cols-3 list-decimal list-inside">
@@ -240,7 +268,7 @@
     </ol>
   </section>
 
-  <!-- ===== Download CTA ===== -->
+  <!-- ============ Download CTA ============ -->
   <section id="download" class="max-w-6xl mx-auto px-4 py-10">
     <div class="bg-slate-900 rounded-3xl text-white p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
       <div>
@@ -256,7 +284,7 @@
     </p>
   </section>
 
-  <!-- ===== Footer ===== -->
+  <!-- ============ Footer ============ -->
   <footer class="border-t mt-12">
     <div class="max-w-6xl mx-auto px-4 py-8 text-sm text-slate-500 flex flex-col md:flex-row items-center justify-between gap-3">
       <div>© <span id="year"></span> Tokyo Seimitsu Hatsujo Co., Ltd. •
@@ -279,7 +307,7 @@
     <span>WhatsApp</span>
   </a>
 
-  <!-- ===== Modal (Form) ===== -->
+  <!-- ============ Modal: Form Download ============ -->
   <div id="modal" class="fixed inset-0 z-50 hidden">
     <div class="absolute inset-0 bg-black/40" data-close="1"></div>
     <div class="relative max-w-2xl mx-auto mt-16 bg-white rounded-2xl p-6 shadow-lg">
@@ -349,11 +377,32 @@
     </div>
   </div>
 
-  <noscript><div class="max-w-6xl mx-auto p-4 text-red-600">This page requires JavaScript to submit the form and start the download.</div></noscript>
+  <!-- ============ Modal: Gallery (Lightbox) ============ -->
+  <div id="gallery" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 lightbox-backdrop"></div>
+    <div class="relative max-w-5xl mx-auto mt-10 bg-white rounded-2xl p-4 shadow-lg">
+      <div class="flex items-center justify-between px-2">
+        <div class="font-semibold" id="galleryTitle">Gallery</div>
+        <div class="flex items-center gap-2">
+          <button id="prevImg" class="px-3 py-1 rounded border">◀</button>
+          <button id="nextImg" class="px-3 py-1 rounded border">▶</button>
+          <button id="closeGallery" class="px-3 py-1 rounded border">✖</button>
+        </div>
+      </div>
+      <div class="mt-3">
+        <img id="galleryImg" src="" alt="Series image" class="w-full h-[60vh] object-contain rounded-lg border" />
+      </div>
+      <div id="thumbs" class="mt-3 grid grid-cols-6 gap-2"></div>
+    </div>
+  </div>
 
-  <!-- ===== JS (i18n + submit ke Apps Script) ===== -->
+  <noscript><div class="max-w-6xl mx-auto p-4 text-red-600">This page requires JavaScript to submit the form, play the video, and open the gallery.</div></noscript>
+
+  <!-- ============ JS (i18n + video + form + gallery) ============ -->
   <script>
     const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+
+    /* ---------- i18n texts ---------- */
     const translations = {
       en:{common:{whatsapp:"WhatsApp"},nav:{about:"About",features:"Key Features",series:"WB Series",video:"Video",how:"How to Order",download:"Download"},
         cta:{download:"Download Catalog",how:"How to Order"},
@@ -378,7 +427,9 @@
       }
     };
 
-    const modal=$("#modal"), openers=["#openModal","#openModal2","#openModal3"].map(id=>$(id)), year=$("#year"), langSelect=$("#langSelect"), leadForm=$("#leadForm"), successNote=$("#successNote"), fallbackLink=$("#fallbackLink");
+    const modal=$("#modal"), openers=["#openModal","#openModal2","#openModal3"].map(id=>$(id)), year=$("#year"),
+          langSelect=$("#langSelect"), leadForm=$("#leadForm"), successNote=$("#successNote"),
+          fallbackLink=$("#fallbackLink");
 
     function resolveLang(pref){ if(pref!=="auto") return pref; const n=navigator.language||(navigator.languages&&navigator.languages[0])||"en"; return n.toLowerCase().startsWith("ja")?"ja":"en"; }
     function applyI18n(lang){
@@ -396,14 +447,14 @@
     modal.addEventListener("click",(e)=>{ if(e.target.dataset.close) closeModal(); });
     openers.forEach(b=>b&&b.addEventListener("click",openModal));
 
+    // Init hero image, year, language
+    $("#heroConcept").src = HERO_CONCEPT_IMAGE || "images/AB_WingbendMA_EN.png";
     year.textContent=new Date().getFullYear();
     const savedLang=localStorage.getItem("wb_lang")||"auto";
-    langSelect.value=savedLang;
-    const activeLang=resolveLang(savedLang);
-    applyI18n(activeLang);
+    langSelect.value=savedLang; applyI18n(resolveLang(savedLang));
     langSelect.addEventListener("change",()=>{ const pref=langSelect.value; localStorage.setItem("wb_lang",pref); applyI18n(resolveLang(pref)); });
 
-    // YouTube (opsional)
+    // YouTube / Local video
     function normalizeYouTubeId(input){
       if(!input) return "";
       try{ const u=new URL(input);
@@ -412,14 +463,15 @@
       }catch(e){ return input; }
       return input;
     }
-    (function mountYouTube(){
+    (function mountMedia(){
+      // local video
+      if(LOCAL_VIDEO){ $("#localVideoSrc").src = LOCAL_VIDEO; $("#localVideo").load(); }
+      // youtube
       const id = normalizeYouTubeId(YOUTUBE_INPUT);
-      if(!id) return;
-      $("#ytIframe").src=`https://www.youtube.com/embed/${id}`;
-      $("#ytWrap").classList.remove("hidden");
+      if(id){ $("#ytIframe").src=`https://www.youtube.com/embed/${id}`; $("#ytWrap").classList.remove("hidden"); }
     })();
 
-    // UTM & context
+    // UTM + context
     function getParam(n){ const u=new URL(location.href); return u.searchParams.get(n)||""; }
     function ctx(){
       return {
@@ -434,20 +486,14 @@
     }
     fallbackLink.href = encodeURI(CATALOG_URL);
 
-    // submit ke Apps Script
+    // Submit ke Apps Script
     async function sendToSheet(payload){
       if(!SCRIPT_URL){ console.warn("SCRIPT_URL belum diisi."); return false; }
       try{
-        await fetch(SCRIPT_URL, {
-          method:'POST',
-          mode:'no-cors',
-          headers:{'Content-Type':'application/json'},
-          body: JSON.stringify(payload)
-        });
+        await fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
         return true;
       }catch(e){ console.warn(e); return false; }
     }
-
     leadForm.addEventListener("submit", async (e)=>{
       e.preventDefault();
       const consent = $("#f_agree").checked ? CONSENT_VALUE : "";
@@ -472,9 +518,42 @@
       a.download="";
       document.body.appendChild(a); a.click(); a.remove();
     });
+
+    /* ---------- Series gallery (lightbox) ---------- */
+    const gallery=$("#gallery"), galleryImg=$("#galleryImg"), galleryTitle=$("#galleryTitle"), thumbs=$("#thumbs");
+    let galleryList=[], galleryIdx=0;
+
+    function openGallery(seriesKey, titleText){
+      galleryList = SERIES_IMAGES[seriesKey] || [];
+      galleryIdx = 0;
+      galleryTitle.textContent = `${titleText} — Gallery`;
+      renderGallery();
+      gallery.classList.remove("hidden");
+      document.documentElement.classList.add("modal-open");
+    }
+    function closeGalleryFn(){ gallery.classList.add("hidden"); document.documentElement.classList.remove("modal-open"); }
+    function renderGallery(){
+      if(!galleryList.length){ galleryImg.src=""; thumbs.innerHTML='<div class="text-slate-500 p-3">No images.</div>'; return; }
+      galleryImg.src = galleryList[galleryIdx];
+      thumbs.innerHTML = galleryList.map((src,i)=>`
+        <img src="${src}" data-idx="${i}" class="w-full h-20 object-cover rounded border ${i===galleryIdx?'ring-2 ring-sky-500':''}" />
+      `).join("");
+      $$("#thumbs img").forEach(img=>img.addEventListener("click",e=>{ galleryIdx=+e.target.dataset.idx; renderGallery(); }));
+    }
+    $("#closeGallery").addEventListener("click",closeGalleryFn);
+    $("#prevImg").addEventListener("click",()=>{ if(!galleryList.length) return; galleryIdx=(galleryIdx-1+galleryList.length)%galleryList.length; renderGallery(); });
+    $("#nextImg").addEventListener("click",()=>{ if(!galleryList.length) return; galleryIdx=(galleryIdx+1)%galleryList.length; renderGallery(); });
+    gallery.addEventListener("click",(e)=>{ if(e.target.classList.contains("lightbox-backdrop")) closeGalleryFn(); });
+    document.addEventListener("keydown",(e)=>{ if(gallery.classList.contains("hidden")) return; if(e.key==="Escape") closeGalleryFn(); if(e.key==="ArrowLeft") $("#prevImg").click(); if(e.key==="ArrowRight") $("#nextImg").click(); });
+
+    // Bind cards
+    $$("#series [data-series]").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        const key = btn.getAttribute("data-series");
+        const title = btn.querySelector(".font-semibold")?.textContent || key.toUpperCase();
+        openGallery(key, title);
+      });
+    });
   </script>
 </body>
 </html>
-
-
-
