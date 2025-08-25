@@ -20,9 +20,9 @@
 <body class="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-800">
   <!-- ===== CONFIG (EDIT) ===== -->
   <script>
-    const CATALOG_URL = "downloads/wingbend-catalog.pdf"; // PDF katalog (sudah ada)
+    const CATALOG_URL = "downloads/e catalog.pdf"; // PDF katalog (sudah ada)
     const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSekZCgIo6G84zigbytNiPlJCD2hHyFmHAdR7aQw8lxKKYfnfw/formResponse";
-    const YOUTUBE_ID = ""; // isi kalau mau embed YouTube, contoh: "abcdEFGhijk"
+    const YOUTUBE_ID = ""; // isi kalau mau embed YouTube, contoh: "https://www.youtube.com/watch?v=Jg86i4Kg_QQ"
 
     // === ENTRY ID dari Google Form (hasil prefilled link kamu) ===
     const FIELD_MAP = {
@@ -37,7 +37,7 @@
       topic:    "entry.507514688",    // FAQ Topic
       agree:    "entry.1788381472",   // Checkbox consent
 
-      // Tidak ada pertanyaan UTM di Form kamu saat ini → biarkan kosong
+      // Tidak ada pertanyaan UTM di Form saat ini → biarkan kosong
       utm_source:   "",
       utm_medium:   "",
       utm_campaign: "",
@@ -65,8 +65,8 @@
       <nav class="hidden md:flex items-center gap-6 text-sm">
         <a href="#about" class="hover:opacity-80" data-i18n="nav.about">About</a>
         <a href="#features" class="hover:opacity-80" data-i18n="nav.features">Key Features</a>
-        <a href="#series" class="hover:opacity-80">WB Series</a>
-        <a href="#video" class="hover:opacity-80">Video</a>
+        <a href="#series" class="hover:opacity-80" data-i18n="nav.series">WB Series</a>
+        <a href="#video" class="hover:opacity-80" data-i18n="nav.video">Video</a>
         <a href="#how" class="hover:opacity-80" data-i18n="nav.how">How to Order</a>
         <a href="#download" class="hover:opacity-80" data-i18n="nav.download">Download</a>
       </nav>
@@ -167,7 +167,7 @@
 
   <!-- ===== Series ===== -->
   <section id="series" class="max-w-6xl mx-auto px-4 py-10">
-    <h2 class="text-2xl font-semibold mb-6">WB Series</h2>
+    <h2 class="text-2xl font-semibold mb-6" data-i18n="series.title">WB Series</h2>
     <div class="grid md:grid-cols-3 gap-6">
       <div class="rounded-2xl border bg-white p-6">
         <div class="text-sm text-slate-500">STANDARD</div>
@@ -209,7 +209,7 @@
 
   <!-- ===== VIDEO ===== -->
   <section id="video" class="max-w-6xl mx-auto px-4 py-10">
-    <h2 class="text-2xl font-semibold mb-4">WingBend Video / Simulation</h2>
+    <h2 class="text-2xl font-semibold mb-4" data-i18n="video.title">WingBend Video / Simulation</h2>
     <div class="grid md:grid-cols-2 gap-6 items-start">
       <video controls class="w-full rounded-2xl border bg-black" poster="images/AB_WingbendMA_EN.png">
         <source src="videos/wingbend.mp4" type="video/mp4" />
@@ -222,7 +222,9 @@
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
     </div>
-    <p class="text-sm text-slate-500 mt-2">Upload <code>videos/wingbend.mp4</code> atau isi <code>YOUTUBE_ID</code>.</p>
+    <p class="text-sm text-slate-500 mt-2" data-i18n="video.note">
+      Upload file <code>videos/wingbend.mp4</code> atau set <code>YOUTUBE_ID</code> di bagian CONFIG.
+    </p>
   </section>
 
   <!-- ===== How to Order ===== -->
@@ -349,20 +351,106 @@
   <!-- ===== JS (i18n + form + youtube) ===== -->
   <script>
     const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
-    const translations={en:{nav:{about:"About",features:"Key Features",how:"How to Order",download:"Download"},cta:{download:"Download Catalog",how:"How to Order"},
-      hero:{title:"Redefining Mark-Free Forming with WingBend",subtitle:"Achieve beautiful outer radii and short flanges with minimal marking — even near holes, tapered edges, and patterned plates.",trust:"Trusted by precision fabricators worldwide.",imageCaption:"WingBend / WingBend Plus tool concept"},
-      badges:{markFree:"Mark-free bending"},about:{title:"What is WingBend?",copy:"WingBend and WingBend Plus are V-die systems that minimize surface marks while enabling short flanges, consistent angles, and excellent repeatability.",company:"Company",links:"Links"},
-      features:{title:"Key Features",items:[{title:"Minimal marking",body:"Mark-free finish on visible surfaces — no rework."},{title:"Near-feature bending",body:"Bend close to holes and edges with stable flanges and exact angles."},{title:"Flexible applications",body:"Ideal for diagonal/tapered bends and chequer plates with consistent quality."}]},
-      how:{title:"How to Order",steps:["Share sheet specs (material, thickness, width, batch rate).","We recommend the optimal WingBend model and slider.","Confirm quotation & delivery, then place PO."]},
-      download:{title:"Download the WingBend Catalog",copy:"Fill in your details to receive the PDF instantly."},privacy:{note:"Your info is used to fulfill your request and relevant product updates. You can opt out anytime."},
-      form:{title:"Before downloading — tell us about you",subtitle:"We’ll send you the latest catalog and product tips.",name:"Full name",company:"Company",phone:"Phone",country:"Country/Region",language:"Preferred language",purpose:"Project details or interest (optional)",question:"Inquiry (optional)",consent:"I agree to receive product updates and communications related to WingBend (you can unsubscribe at any time).",submit:"Get Catalog",cancel:"Cancel",success:"Thanks! Your download will start. If not, use the link below."}},
-    ja:{nav:{about:"概要",features:"特長",how:"注文方法",download:"カタログ"},cta:{download:"カタログをダウンロード",how:"注文方法"},
-      hero:{title:"WingBendで “キズなし曲げ” を再定義",subtitle:"穴やテーパー端、縞板でも、美しい外Rと短フランジを最小限のキズで実現。",trust:"精密板金の現場で採用が進むツールです。",imageCaption:"WingBend / WingBend Plus のコンセプト"},
-      badges:{markFree:"キズなし曲げ"},about:{title:"WingBendとは",copy:"WingBend／WingBend Plus は、短フランジ・正確な角度・高い再現性を保ちながら、目視面のキズを抑えるVダイシステムです。",company:"会社情報",links:"リンク"},
-      features:{title:"主な特長",items:[{title:"キズを最小化",body:"目視面のキズを抑制し、後加工レスを目指せます。"},{title:"穴や端部に近い曲げ",body:"穴・端部に近い位置でも安定したフランジと角度を確保。"},{title:"幅広い適用",body:"斜め／テーパー曲げ、縞板にも対応し、均一な品質を実現。"}]},
-      how:{title:"ご注文の流れ",steps:["材質・板厚・板幅・ロット等の仕様をご共有ください。","最適な WingBend 機種とスライダーを提案します。","お見積り・納期確定後、ご発注ください。"]},
-      download:{title:"WingBend 総合カタログ",copy:"以下のフォームに入力すると、PDF をすぐに取得できます。"},privacy:{note:"入力情報は資料送付および関連製品のご案内に利用します。配信停止はいつでも可能です。"},
-      form:{title:"ダウンロードの前に — ご連絡先",subtitle:"最新版カタログと活用ヒントをお送りします。",name:"氏名",company:"会社名",phone:"電話番号",country:"国／地域",language:"希望言語",purpose:"案件内容・ご関心（任意）",question:"お問い合わせ内容（任意）",consent:"WingBend に関する情報提供の受信に同意します（いつでも配信停止可）。",submit:"カタログを取得",cancel:"キャンセル",success:"ありがとうございます。ダウンロードが開始します。開始しない場合は下記リンクをクリックしてください。"}}
+    const translations = {
+      en: {
+        nav: { about:"About", features:"Key Features", how:"How to Order", download:"Download", series:"WB Series", video:"Video" },
+        cta: { download:"Download Catalog", how:"How to Order" },
+        hero: {
+          title:"Redefining Mark-Free Forming with WingBend",
+          subtitle:"Achieve beautiful outer radii and short flanges with minimal marking — even near holes, tapered edges, and patterned plates.",
+          trust:"Trusted by precision fabricators worldwide.",
+          imageCaption:"WingBend / WingBend Plus tool concept"
+        },
+        badges: { markFree:"Mark-free bending" },
+        about: {
+          title:"What is WingBend?",
+          copy:"WingBend and WingBend Plus are V-die systems that minimize surface marks while enabling short flanges, consistent angles, and excellent repeatability.",
+          company:"Company",
+          links:"Links"
+        },
+        features: {
+          title:"Key Features",
+          items: [
+            { title:"Minimal marking", body:"Mark-free finish on visible surfaces — no rework." },
+            { title:"Near-feature bending", body:"Bend close to holes and edges with stable flanges and exact angles." },
+            { title:"Flexible applications", body:"Ideal for diagonal/tapered bends and chequer plates with consistent quality." }
+          ]
+        },
+        series: { title: "WB Series" },
+        video: {
+          title: "WingBend Video / Simulation",
+          note: "Upload file videos/wingbend.mp4 or set YOUTUBE_ID above."
+        },
+        how: {
+          title:"How to Order",
+          steps:[
+            "Share sheet specs (material, thickness, width, batch rate).",
+            "We recommend the optimal WingBend model and slider.",
+            "Confirm quotation & delivery, then place PO."
+          ]
+        },
+        download:{ title:"Download the WingBend Catalog", copy:"Fill in your details to receive the PDF instantly." },
+        privacy:{ note:"Your info is used to fulfill your request and relevant product updates. You can opt out anytime." },
+        form:{
+          title:"Before downloading — tell us about you",
+          subtitle:"We’ll send you the latest catalog and product tips.",
+          name:"Full name", company:"Company", phone:"Phone", country:"Country/Region", language:"Preferred language",
+          purpose:"Project details or interest (optional)", question:"Inquiry (optional)",
+          consent:"I agree to receive product updates and communications related to WingBend (you can unsubscribe at any time).",
+          submit:"Get Catalog", cancel:"Cancel",
+          success:"Thanks! Your download will start. If not, use the link below."
+        }
+      },
+
+      ja: {
+        nav: { about:"概要", features:"特長", how:"注文方法", download:"カタログ", series:"WBシリーズ", video:"動画" },
+        cta: { download:"カタログをダウンロード", how:"注文方法" },
+        hero: {
+          title:"WingBendで“キズなし曲げ”をスタンダードに",
+          subtitle:"穴や端部に近い曲げ、テーパー、縞板でも、美しい外Rと短いフランジを安定して実現します。",
+          trust:"国内外の精密板金メーカーで採用が進んでいます。",
+          imageCaption:"WingBend / WingBend Plus のコンセプト"
+        },
+        badges: { markFree:"キズなし曲げ" },
+        about: {
+          title:"WingBendとは",
+          copy:"WingBend／WingBend Plus は、短いフランジ・正確な角度・高い再現性を保ちながら、目視面のキズを抑えるVダイシステムです。",
+          company:"会社情報",
+          links:"リンク"
+        },
+        features: {
+          title:"主な特長",
+          items: [
+            { title:"目視面のキズを抑制", body:"外観部品でも後処理を最小化できます。" },
+            { title:"穴・縁に近い曲げ", body:"穴や端部の近傍でも安定したフランジと角度を確保。" },
+            { title:"幅広い適用", body:"斜め・テーパー・縞板など難素材でも均一な品質を実現。" }
+          ]
+        },
+        series: { title: "WBシリーズ" },
+        video: {
+          title: "WingBend 動画／シミュレーション",
+          note: "videos/wingbend.mp4 を配置するか、上部の YOUTUBE_ID を設定してください。"
+        },
+        how: {
+          title:"ご注文の流れ",
+          steps:[
+            "材質・板厚・板幅・ロット等の仕様をご共有ください。",
+            "最適な WingBend 機種とスライダーをご提案します。",
+            "お見積り・納期確定後にご発注ください。"
+          ]
+        },
+        download:{ title:"WingBend 総合カタログ", copy:"必要事項をご入力いただくと、PDF をすぐにダウンロードできます。" },
+        privacy:{ note:"ご提供いただいた情報は資料送付および関連製品のご案内にのみ利用します。配信停止はいつでも可能です。" },
+        form:{
+          title:"ダウンロードの前に — ご連絡先",
+          subtitle:"最新版カタログと活用ヒントをお送りします。",
+          name:"氏名", company:"会社名", phone:"電話番号", country:"国／地域", language:"希望言語",
+          purpose:"案件内容・ご関心（任意）", question:"お問い合わせ内容（任意）",
+          consent:"WingBend に関するお知らせの受信に同意します（いつでも配信停止可）。",
+          submit:"カタログを取得", cancel:"キャンセル",
+          success:"ありがとうございます。ダウンロードが開始します。開始しない場合は下のリンクをクリックしてください。"
+        }
+      }
     };
 
     const modal=$("#modal"), openers=["#openModal","#openModal2","#openModal3"].map(id=>$(id)), year=$("#year"), langSelect=$("#langSelect"), leadForm=$("#leadForm"), hiddenIframe=$("#hidden_iframe"), successNote=$("#successNote"), fallbackLink=$("#fallbackLink");
